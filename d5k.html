@@ -1,0 +1,3044 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 17+ DSA Master &mdash; 5,000 Practice Questions &amp; Interview Portal</title>
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --bg-code: #0b1120;
+      --bg-code-bar: #131c31;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-soft: rgba(79, 70, 229, 0.1);
+      --amber: #d97706;
+      --amber-soft: rgba(245, 158, 11, 0.14);
+      --green: #16a34a;
+      --green-soft: rgba(34, 197, 94, 0.14);
+      --red: #dc2626;
+      --red-soft: rgba(239, 68, 68, 0.14);
+      --purple: #7e22ce;
+      --purple-soft: rgba(168, 85, 247, 0.14);
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.2);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    html.dark {
+      --bg-page: #060a14;
+      --bg-surface: #0f172a;
+      --bg-elevated: #1e293b;
+      --bg-code: #050811;
+      --bg-code-bar: #0d1424;
+      --border: #1e293b;
+      --border-strong: #334155;
+      --text-main: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --accent-soft: rgba(99, 102, 241, 0.16);
+      --amber: #fbbf24;
+      --amber-soft: rgba(251, 191, 36, 0.14);
+      --green: #4ade80;
+      --green-soft: rgba(74, 222, 128, 0.14);
+      --red: #f87171;
+      --red-soft: rgba(248, 113, 113, 0.14);
+      --purple: #c084fc;
+      --purple-soft: rgba(192, 132, 252, 0.14);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 24px 45px -12px rgba(0, 0, 0, 0.65);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.55;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    button, input, select { font-family: inherit; color: inherit; }
+    button { cursor: pointer; border: none; background: none; }
+
+    /* Sticky Top Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 66px;
+      padding: 8px 0;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-logo {
+      width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed 55%, #ea580c);
+      color: #fff; font-weight: 800; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    }
+    .brand-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .brand-title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-badge {
+      font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+    .brand-sub { font-size: 0.74rem; color: var(--text-muted); margin-top: 2px; }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 13px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;
+      border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-main);
+      transition: all 0.15s ease; min-height: 36px;
+    }
+    .btn:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-hover); color: #fff; }
+    .btn-amber { background: var(--amber-soft); color: var(--amber); border-color: rgba(245, 158, 11, 0.35); }
+    .btn-amber:hover { background: rgba(245, 158, 11, 0.24); color: var(--amber); }
+    .btn-danger { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn-danger:hover { opacity: 0.9; color: #fff; }
+    .btn-icon { padding: 8px 10px; }
+
+    /* Progress Strip */
+    .progress-strip {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .progress-grid {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .progress-meta-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+    .progress-numbers { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+    .progress-big { font-size: 1.35rem; font-weight: 800; font-family: var(--font-mono); }
+    .progress-pct {
+      font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+      background: var(--green-soft); color: var(--green);
+    }
+    .progress-track-wrap { flex: 1; min-width: 220px; max-width: 540px; }
+    .progress-track {
+      width: 100%; height: 11px; border-radius: 999px; background: var(--bg-elevated);
+      border: 1px solid var(--border); padding: 2px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0%; border-radius: 999px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #22c55e);
+      transition: width 0.25s ease;
+    }
+    .progress-right { display: flex; align-items: center; gap: 14px; font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Main Workspace */
+    main { flex: 1; padding: 20px 0 40px; }
+    .filter-card {
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 16px; box-shadow: var(--shadow-sm); margin-bottom: 16px;
+    }
+    .filter-row-top {
+      display: grid; grid-template-columns: 2fr 1.6fr 1fr 1.3fr; gap: 10px;
+    }
+    @media (max-width: 960px) { .filter-row-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .filter-row-top { grid-template-columns: 1fr; } }
+
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .field {
+      width: 100%; height: 40px; padding: 0 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg-elevated);
+      font-size: 0.84rem; outline: none; transition: border-color 0.15s ease;
+    }
+    .field:focus { border-color: var(--accent); }
+    .search-field { padding-right: 34px; }
+    .clear-btn {
+      position: absolute; right: 8px; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--border-strong); color: var(--bg-surface); font-size: 0.72rem;
+      display: none; align-items: center; justify-content: center;
+    }
+    .clear-btn.visible { display: inline-flex; }
+
+    .filter-row-bottom {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .status-tabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .status-tab {
+      padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+      background: var(--bg-elevated); color: var(--text-muted); border: 1px solid transparent;
+    }
+    .status-tab.active { background: var(--accent); color: #fff; }
+    .nav-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-muted); }
+    .jump-box { display: flex; align-items: center; gap: 4px; }
+    .jump-input { width: 112px; height: 32px; padding: 0 8px; border-radius: 8px; font-size: 0.78rem; }
+    .mini-select { height: 32px; padding: 0 8px; border-radius: 8px; font-size: 0.78rem; border: 1px solid var(--border); background: var(--bg-elevated); }
+
+    /* Pagination Bars */
+    .pager-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-muted);
+    }
+    .pager-controls { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+    .page-btn {
+      min-width: 34px; height: 34px; padding: 0 10px; border-radius: 8px;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .bottom-pager { display: flex; justify-content: center; margin-top: 20px; }
+
+    /* Question Cards */
+    .q-list { display: flex; flex-direction: column; gap: 10px; }
+    .q-card {
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; box-shadow: var(--shadow-sm); transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .q-card:hover { border-color: var(--border-strong); }
+    .q-card.mastered { border-color: rgba(34, 197, 94, 0.48); }
+    .q-card.highlight-pulse { box-shadow: 0 0 0 2px var(--accent); border-color: var(--accent); }
+
+    .q-header {
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; cursor: pointer; user-select: none;
+    }
+    .q-header:hover { background: rgba(99, 102, 241, 0.04); }
+    .q-left { display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: 1; }
+    .check-toggle {
+      width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0; margin-top: 2px;
+      border: 2px solid var(--border-strong); display: inline-flex; align-items: center;
+      justify-content: center; font-size: 0.78rem; font-weight: 800; color: transparent;
+      transition: all 0.15s ease;
+    }
+    .check-toggle.checked { background: #16a34a; border-color: #16a34a; color: #fff; }
+    .q-info { min-width: 0; flex: 1; }
+    .q-title-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .q-id { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; color: var(--text-muted); }
+    .q-title { font-size: 0.92rem; font-weight: 700; color: var(--text-main); }
+    .q-subline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+    .badge {
+      font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .badge-Easy { background: var(--green-soft); color: var(--green); }
+    .badge-Medium { background: var(--amber-soft); color: var(--amber); }
+    .badge-Hard { background: var(--red-soft); color: var(--red); }
+    .badge-Internals { background: var(--purple-soft); color: var(--purple); }
+    .badge-feature { background: var(--accent-soft); color: var(--accent); }
+    .badge-module { background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border); }
+    .badge-complexity { font-family: var(--font-mono); background: var(--bg-elevated); color: var(--text-secondary); }
+
+    .q-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .star-btn {
+      width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; color: var(--text-muted);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .star-btn:hover { background: var(--bg-elevated); color: var(--amber); }
+    .star-btn.active { color: var(--amber); }
+    .chevron { font-size: 0.85rem; color: var(--text-muted); transition: transform 0.2s ease; padding: 0 4px; }
+    .q-card.open .chevron { transform: rotate(180deg); }
+
+    /* Expandable Body */
+    .q-body {
+      display: none;
+      padding: 16px 18px 18px;
+      border-top: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.02);
+    }
+    html.dark .q-body { background: rgba(2, 6, 23, 0.35); }
+    .q-card.open .q-body { display: block; }
+
+    .detail-grid { display: flex; flex-direction: column; gap: 14px; }
+    .detail-block-label {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted); margin-bottom: 5px;
+    }
+    .detail-box {
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 11px;
+      padding: 12px 14px; font-size: 0.86rem; color: var(--text-secondary);
+    }
+    .detail-box code {
+      font-family: var(--font-mono); font-size: 0.8rem; padding: 1px 5px;
+      border-radius: 4px; background: var(--bg-elevated); color: var(--accent);
+    }
+    .approach-box {
+      background: var(--accent-soft); border: 1px solid rgba(99, 102, 241, 0.26);
+      border-radius: 11px; padding: 12px 14px; font-size: 0.86rem; color: var(--text-main);
+    }
+
+    .code-header-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;
+    }
+    .code-shell {
+      background: var(--bg-code); border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden;
+    }
+    .code-shell-top {
+      display: flex; align-items: center; justify-content: space-between; padding: 7px 14px;
+      background: var(--bg-code-bar); border-bottom: 1px solid #1e293b;
+      font-family: var(--font-mono); font-size: 0.72rem; color: #94a3b8;
+    }
+    pre {
+      padding: 14px 16px; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.81rem; line-height: 1.52; color: #e2e8f0;
+    }
+    .tok-kw { color: #c084fc; font-weight: 600; }
+    .tok-type { color: #38bdf8; }
+    .tok-str { color: #fde047; }
+    .tok-com { color: #64748b; font-style: italic; }
+
+    .body-footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      flex-wrap: wrap; padding-top: 4px;
+    }
+    .complexity-pair { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .comp-pill {
+      padding: 6px 12px; border-radius: 9px; background: var(--bg-surface);
+      border: 1px solid var(--border); font-size: 0.78rem;
+    }
+    .comp-pill strong { font-family: var(--font-mono); color: var(--text-main); }
+
+    /* Empty State */
+    .empty-state {
+      display: none; text-align: center; padding: 48px 20px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 16px;
+    }
+    .empty-state.visible { display: block; }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 50; background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: var(--bg-surface); border: 1px solid var(--border-strong); border-radius: 18px;
+      width: 100%; max-width: 860px; max-height: 88vh; display: flex; flex-direction: column;
+      box-shadow: var(--shadow-lg); overflow: hidden;
+    }
+    .modal-card-sm { max-width: 440px; }
+    .modal-head {
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .modal-body { padding: 18px 20px; overflow-y: auto; }
+    .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+
+    .syllabus-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .syllabus-table th, .syllabus-table td {
+      padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left;
+    }
+    .syllabus-table th { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); background: var(--bg-elevated); }
+    .syllabus-row { cursor: pointer; transition: background 0.12s ease; }
+    .syllabus-row:hover { background: var(--accent-soft); }
+    .mini-bar { width: 100%; height: 7px; border-radius: 999px; background: var(--bg-elevated); overflow: hidden; margin-top: 4px; }
+    .mini-bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; z-index: 60;
+      background: var(--text-main); color: var(--bg-surface);
+      padding: 10px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 700;
+      box-shadow: var(--shadow-lg); transform: translateY(80px); opacity: 0;
+      transition: all 0.25s ease; pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    footer {
+      border-top: 1px solid var(--border); background: var(--bg-surface);
+      padding: 18px 16px; text-align: center; font-size: 0.78rem; color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">J17</div>
+        <div>
+          <div class="brand-title-row">
+            <h1 class="brand-title">Java 17+ DSA Master</h1>
+            <span class="brand-badge">5,000 Qs &bull; Java 17+ LTS</span>
+          </div>
+          <p class="brand-sub">10 Modules &times; 500 Verified 1-to-1 Solutions &bull; Records, Sealed Types, Pattern Matching, Switch Expressions &amp; JVM</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button type="button" id="random-btn" class="btn btn-amber" title="Pick a random question matching active filters">
+          &#9889; Random Mock Question
+        </button>
+        <button type="button" id="syllabus-btn" class="btn">
+          &#128202; Module Syllabus (10 &times; 500)
+        </button>
+        <button type="button" id="export-btn" class="btn btn-icon" title="Export Progress JSON">&#8681; Export</button>
+        <button type="button" id="import-btn" class="btn btn-icon" title="Import Progress JSON">&#8679; Import</button>
+        <input type="file" id="import-file" accept=".json" hidden>
+        <button type="button" id="theme-btn" class="btn btn-icon" title="Toggle Dark / Light Theme">&#9788; Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- LIVE PROGRESS DASHBOARD -->
+  <section class="progress-strip">
+    <div class="container progress-grid">
+      <div>
+        <div class="progress-meta-label">5,000-Question Mastery Progress</div>
+        <div class="progress-numbers">
+          <span id="solved-count" class="progress-big">0</span>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">/ 5,000 Mastered</span>
+          <span id="solved-pct" class="progress-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="progress-track-wrap">
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="progress-right">
+        <span>&#9733; <strong id="bookmark-count">0</strong> Bookmarked</span>
+        <button type="button" id="reset-btn" style="color: var(--red); font-weight: 600; font-size: 0.78rem;">&#8634; Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="container">
+    <!-- MULTI-FACET FILTER & INSTANT NAVIGATION BAR -->
+    <section class="filter-card" aria-label="Search and Filter Controls">
+      <div class="filter-row-top">
+        <div class="input-wrap">
+          <input type="text" id="search-input" class="field search-field" placeholder="Search #1..#5000, title, algorithm pattern, or Java 17+ feature...">
+          <button type="button" id="clear-search" class="clear-btn" aria-label="Clear search">&times;</button>
+        </div>
+
+        <select id="module-select" class="field" aria-label="Filter by Module">
+          <option value="all">All 10 Modules (5,000 Qs)</option>
+        </select>
+
+        <select id="diff-select" class="field" aria-label="Filter by Difficulty">
+          <option value="all">All Difficulties</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+          <option value="Java Internals">Java Internals</option>
+        </select>
+
+        <select id="feature-select" class="field" aria-label="Filter by Java 17+ Feature">
+          <option value="all">All Java 17+ Features</option>
+          <option value="Records (JEP 395)">Records (JEP 395)</option>
+          <option value="Sealed Interfaces (JEP 409)">Sealed Interfaces (JEP 409)</option>
+          <option value="Switch Expressions (JEP 361)">Switch Expressions (JEP 361)</option>
+          <option value="Pattern Matching instanceof (JEP 394)">Pattern Matching instanceof (JEP 394)</option>
+          <option value="Text Blocks (JEP 378)">Text Blocks (JEP 378)</option>
+          <option value="var Type Inference">var Type Inference</option>
+          <option value="Immutable Collections">Immutable Collections</option>
+          <option value="ConcurrentHashMap & CAS">ConcurrentHashMap &amp; CAS</option>
+          <option value="StampedLock & LongAdder">StampedLock &amp; LongAdder</option>
+          <option value="BitSet & Vector Math">BitSet &amp; Vector Math</option>
+        </select>
+      </div>
+
+      <div class="filter-row-bottom">
+        <div class="status-tabs" role="tablist">
+          <button type="button" data-status="all" class="status-tab active">All</button>
+          <button type="button" data-status="mastered" class="status-tab">Mastered</button>
+          <button type="button" data-status="bookmarked" class="status-tab">Bookmarked</button>
+          <button type="button" data-status="pending" class="status-tab">Pending</button>
+        </div>
+
+        <div class="nav-tools">
+          <div class="jump-box">
+            <input type="number" id="jump-input" class="field jump-input" min="1" max="5000" placeholder="Jump #1..5000" aria-label="Jump to Question ID">
+            <button type="button" id="jump-btn" class="btn btn-primary" style="height: 32px; padding: 0 10px;">Go</button>
+          </div>
+          <span>&bull;</span>
+          <span>Matching: <strong id="visible-count" style="color: var(--text-main);">5,000</strong></span>
+          <span>&bull;</span>
+          <select id="page-size" class="mini-select" aria-label="Questions per page">
+            <option value="25">25 / page</option>
+            <option value="50" selected>50 / page</option>
+            <option value="100">100 / page</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOP PAGINATION BAR -->
+    <div class="pager-bar">
+      <div id="range-info">Showing Questions 1 &ndash; 50 of 5,000</div>
+      <div id="top-pager" class="pager-controls"></div>
+    </div>
+
+    <!-- QUESTIONS LIST -->
+    <div id="q-list" class="q-list"></div>
+
+    <!-- EMPTY STATE -->
+    <div id="empty-state" class="empty-state">
+      <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">No Matching Questions Found</h3>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">Try clearing active filters or searching a different keyword or #ID.</p>
+      <button type="button" id="clear-filters-btn" class="btn btn-primary">Reset All Filters</button>
+    </div>
+
+    <!-- BOTTOM PAGINATION BAR -->
+    <div id="bottom-pager" class="pager-controls bottom-pager"></div>
+  </main>
+
+  <!-- MODULE SYLLABUS MODAL (10 x 500) -->
+  <div id="syllabus-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="syllabus-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h2 id="syllabus-title" style="font-size: 1rem; font-weight: 800;">Module Syllabus &amp; Mastery Breakdown (10 &times; 500 = 5,000 Qs)</h2>
+          <p style="font-size: 0.76rem; color: var(--text-muted);">Click any module row to filter its 500 dedicated Java 17+ questions immediately</p>
+        </div>
+        <button type="button" id="close-syllabus" class="btn btn-icon">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>ID Range</th>
+              <th>Core Algorithms &amp; Java 17+ Idioms</th>
+              <th style="width: 150px;">Mastery (x / 500)</th>
+            </tr>
+          </thead>
+          <tbody id="syllabus-tbody"></tbody>
+        </table>
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="close-syllabus-2" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESET CONFIRMATION MODAL -->
+  <div id="reset-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="reset-title">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-head">
+        <h3 id="reset-title" style="font-size: 0.96rem; font-weight: 800;">Reset All 5,000-Question Progress?</h3>
+        <button type="button" id="close-reset" class="btn btn-icon">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 0.84rem; color: var(--text-secondary);">
+        This clears all mastered checkmarks and bookmarks saved in your browser. Export your JSON backup first if you want to preserve your current progress.
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="cancel-reset" class="btn">Cancel</button>
+        <button type="button" id="confirm-reset" class="btn btn-danger">Yes, Reset Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    Java 17+ DSA Master &bull; 5,000 Verified 1-to-1 Practice Questions &amp; Production Solutions (#1 &ndash; #5000)
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. 10 CORE MODULES x 500 QUESTIONS = 5,000 VERIFIED QUESTIONS
+       ========================================================================= */
+    const MODULES = [
+      { name: "1. Arrays & Two Pointers", focus: "Sliding windows, prefix modular sums, Dutch flag, matrix rotation, binary partition" },
+      { name: "2. Strings & Sliding Window", focus: "Distinct char windows, KMP LPS, Rabin-Karp rolling hash, run-length stack, switch ciphers" },
+      { name: "3. Linked Lists & Pointer Manipulation", focus: "In-place reversal, Floyd cycle entry, k-group reversal, k-part splitting, k-th from tail" },
+      { name: "4. Stacks, Monotonic Queues & Deques", focus: "Switch bracket matcher, Record MinStack, histogram area, monotonic sliding deque, ring buffer" },
+      { name: "5. Hashing, Maps & Bit Manipulation", focus: "Access-ordered LRU, BitSet Bloom filter, streak sets, O(1) RandomizedSet, XOR bitmasks" },
+      { name: "6. Binary Trees, BST & Tries", focus: "Sealed Tree ADT + pattern matching, BST bounds, Segment Tree, Fenwick BIT, Prefix Trie" },
+      { name: "7. Heaps, PriorityQueues & Intervals", focus: "Bounded order statistics, dual-heap stream median, Record interval merge, Huffman sticks" },
+      { name: "8. Graphs, Shortest Paths & Disjoint Sets", focus: "Kahn topological sort, Dijkstra PriorityQueue, Bellman-Ford k-stops, hop-bounded BFS, DSU" },
+      { name: "9. Dynamic Programming & Greedy", focus: "1D/2D tabulation, 0/1 Knapsack, Patience LIS, Levenshtein edit distance, pruned combinations" },
+      { name: "10. Java 17+ Internals, Concurrency & JVM", focus: "HashMap treeification, Treiber CAS stack, StampedLock optimistic read, LongAdder, Text Blocks" }
+    ];
+
+    const mk = (title, difficulty, feature, time, space, statement, approach, code) => ({
+      title, difficulty, feature, time, space, statement, approach, code
+    });
+
+    /* =========================================================================
+       2. CURATED SIGNATURE PROBLEMS PER MODULE (HAND-CRAFTED 1-TO-1)
+       ========================================================================= */
+    const CURATED = [
+      // Module 1: Arrays & Two Pointers
+      [
+        mk("Two Sum Returning Immutable IndexPair Record", "Easy", "Records (JEP 395)", "O(n)", "O(n)",
+          "Given an integer array `nums` and an integer `target`, return the 0-based indices of two distinct elements summing to `target` inside a Java 17 `IndexPair(int first, int second)` record.",
+          "Scan `nums` once while storing `value -> index` in a `HashMap`. Before inserting `nums[i]`, check if `target - nums[i]` was already seen.",
+`public class TwoSumSolver {
+    public record IndexPair(int first, int second) {}
+
+    public IndexPair twoSum(int[] nums, int target) {
+        var indexByValue = new HashMap<Integer, Integer>();
+        for (var i = 0; i < nums.length; i++) {
+            var complement = target - nums[i];
+            if (indexByValue.containsKey(complement)) {
+                return new IndexPair(indexByValue.get(complement), i);
+            }
+            indexByValue.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No pair sums to target");
+    }
+}`),
+        mk("Dutch National Flag 3-Way Partition via Switch", "Medium", "Switch Expressions (JEP 361)", "O(n)", "O(1)",
+          "Sort an array `nums` containing only `0` (red), `1` (white), and `2` (blue) in-place in a single pass with `O(1)` auxiliary space.",
+          "Maintain three boundaries `low`, `mid`, and `high` and dispatch swaps cleanly with a Java 17 arrow `switch` statement.",
+`public class DutchNationalFlag {
+    public void sortColors(int[] nums) {
+        int low = 0, mid = 0, high = nums.length - 1;
+        while (mid <= high) {
+            switch (nums[mid]) {
+                case 0 -> swap(nums, low++, mid++);
+                case 1 -> mid++;
+                case 2 -> swap(nums, mid, high--);
+                default -> throw new IllegalArgumentException("Unexpected value");
+            }
+        }
+    }
+
+    private void swap(int[] a, int i, int j) {
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+}`),
+        mk("Trapping Rain Water (Converging Two Pointers)", "Hard", "var Type Inference", "O(n)", "O(1)",
+          "Given `n` non-negative integers representing an elevation map where each bar has width `1`, compute total trapped rainwater.",
+          "Advance whichever boundary (`left` or `right`) has the smaller height while tracking `leftMax` and `rightMax`.",
+`public class TrappingRainWater {
+    public int trap(int[] height) {
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0, trapped = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
+                leftMax = Math.max(leftMax, height[left]);
+                trapped += leftMax - height[left++];
+            } else {
+                rightMax = Math.max(rightMax, height[right]);
+                trapped += rightMax - height[right--];
+            }
+        }
+        return trapped;
+    }
+}`),
+        mk("Median of Two Sorted Arrays in Logarithmic Time", "Hard", "var Type Inference", "O(log(min(m, n)))", "O(1)",
+          "Given two sorted integer arrays `a` and `b` of sizes `m` and `n`, return the median of the combined sorted sequence in `O(log(min(m, n)))`.",
+          "Binary search the cut index `i` in the smaller array so `maxLeftA <= minRightB` and `maxLeftB <= minRightA`.",
+`public class MedianTwoSortedArrays {
+    public double findMedian(int[] a, int[] b) {
+        if (a.length > b.length) return findMedian(b, a);
+        int m = a.length, n = b.length, lo = 0, hi = m;
+        while (lo <= hi) {
+            var i = (lo + hi) >>> 1;
+            var j = ((m + n + 1) >>> 1) - i;
+            var maxLA = (i == 0) ? Integer.MIN_VALUE : a[i - 1];
+            var minRA = (i == m) ? Integer.MAX_VALUE : a[i];
+            var maxLB = (j == 0) ? Integer.MIN_VALUE : b[j - 1];
+            var minRB = (j == n) ? Integer.MAX_VALUE : b[j];
+            if (maxLA <= minRB && maxLB <= minRA) {
+                return ((m + n) % 2 == 0)
+                    ? (Math.max(maxLA, maxLB) + Math.min(minRA, minRB)) / 2.0
+                    : Math.max(maxLA, maxLB);
+            } else if (maxLA > minRB) hi = i - 1;
+            else lo = i + 1;
+        }
+        throw new IllegalArgumentException("Input arrays must be sorted");
+    }
+}`)
+      ],
+      // Module 2: Strings & Sliding Window
+      [
+        mk("Longest Substring Without Repeating Characters", "Medium", "var Type Inference", "O(n)", "O(min(n, alphabet))",
+          "Given a string `s`, return the length of the longest contiguous substring containing no duplicate characters.",
+          "Maintain a sliding window `[left, right]` and jump `left` past `lastSeen.get(ch)` whenever a repeat enters the window.",
+`public class LongestUniqueSubstring {
+    public int lengthOfLongestSubstring(String s) {
+        var lastSeen = new HashMap<Character, Integer>();
+        int left = 0, best = 0;
+        for (var right = 0; right < s.length(); right++) {
+            var ch = s.charAt(right);
+            if (lastSeen.containsKey(ch)) {
+                left = Math.max(left, lastSeen.get(ch) + 1);
+            }
+            lastSeen.put(ch, right);
+            best = Math.max(best, right - left + 1);
+        }
+        return best;
+    }
+}`),
+        mk("Minimum Window Substring Covering Target Multiset", "Hard", "var Type Inference", "O(|s| + |t|)", "O(1)",
+          "Given strings `s` and `t`, return the shortest substring of `s` containing every character of `t` with multiplicity, or `\"\"`.",
+          "Track required ASCII counts in `need[128]`; expand `right` until `missing == 0`, then contract `left` to record the minimum span.",
+`public class MinimumWindowSubstring {
+    public String minWindow(String s, String t) {
+        var need = new int[128];
+        for (var c : t.toCharArray()) need[c]++;
+        int left = 0, missing = t.length(), bestStart = 0, bestLen = Integer.MAX_VALUE;
+        for (var right = 0; right < s.length(); right++) {
+            if (need[s.charAt(right)]-- > 0) missing--;
+            while (missing == 0) {
+                if (right - left + 1 < bestLen) { bestLen = right - left + 1; bestStart = left; }
+                if (++need[s.charAt(left++)] > 0) missing++;
+            }
+        }
+        return bestLen == Integer.MAX_VALUE ? "" : s.substring(bestStart, bestStart + bestLen);
+    }
+}`),
+        mk("Group Anagrams with Immutable Copy Snapshot", "Medium", "Immutable Collections", "O(n * k)", "O(n * k)",
+          "Given an array of lowercase strings `strs`, group anagrams together and return an immutable list of anagram buckets.",
+          "Encode each string into a canonical 26-char frequency key and collect via `computeIfAbsent` + `List.copyOf`.",
+`public class GroupAnagramsSolver {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        var map = new HashMap<String, List<String>>();
+        for (var word : strs) {
+            var freq = new char[26];
+            for (var c : word.toCharArray()) freq[c - 'a']++;
+            map.computeIfAbsent(new String(freq), k -> new ArrayList<>()).add(word);
+        }
+        return map.values().stream().map(List::copyOf).toList();
+    }
+}`),
+        mk("KMP Substring Search Using LPS Failure Array", "Medium", "var Type Inference", "O(n + m)", "O(m)",
+          "Return the first index where `pattern` occurs inside `text`, or `-1` if absent, guaranteeing linear `O(n + m)` worst-case runtime.",
+          "Precompute the Longest Proper Prefix-Suffix (`lps`) table for `pattern` so mismatches fall back without rewinding `text`.",
+`public class KmpMatcher {
+    public int indexOf(String text, String pattern) {
+        if (pattern.isEmpty()) return 0;
+        var lps = buildLps(pattern);
+        int i = 0, j = 0;
+        while (i < text.length()) {
+            if (text.charAt(i) == pattern.charAt(j)) {
+                i++; j++;
+                if (j == pattern.length()) return i - j;
+            } else if (j > 0) j = lps[j - 1];
+            else i++;
+        }
+        return -1;
+    }
+
+    private int[] buildLps(String p) {
+        var lps = new int[p.length()];
+        for (int i = 1, len = 0; i < p.length(); ) {
+            if (p.charAt(i) == p.charAt(len)) lps[i++] = ++len;
+            else if (len > 0) len = lps[len - 1];
+            else lps[i++] = 0;
+        }
+        return lps;
+    }
+}`)
+      ],
+      // Module 3: Linked Lists
+      [
+        mk("Reverse Singly Linked List In-Place", "Easy", "var Type Inference", "O(n)", "O(1)",
+          "Given the `head` of a singly linked list, reverse the pointers in-place and return the new head.",
+          "Walk the list with `prev` and `curr`, temporarily saving `curr.next` before reversing `curr.next = prev`.",
+`public class ReverseLinkedList {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        var curr = head;
+        while (curr != null) {
+            var next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}`),
+        mk("Detect Cycle Entry Node (Floyd's Tortoise & Hare)", "Medium", "var Type Inference", "O(n)", "O(1)",
+          "Given the `head` of a linked list, return the exact node where a cycle starts, or `null` if the list is acyclic.",
+          "Advance `slow` by 1 and `fast` by 2 until they collide; then reset `slow = head` and step both by 1 to meet at the entry node.",
+`public class CycleEntryFinder {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                slow = head;
+                while (slow != fast) { slow = slow.next; fast = fast.next; }
+                return slow;
+            }
+        }
+        return null;
+    }
+}`),
+        mk("Merge K Sorted Linked Lists via Min-Heap", "Hard", "var Type Inference", "O(N log k)", "O(k)",
+          "Merge `k` sorted linked lists into a single sorted linked list in `O(N log k)` time.",
+          "Push each non-null list head into a min-`PriorityQueue<ListNode>` ordered by `val` and stitch popped nodes sequentially.",
+`public class MergeKListsSolver {
+    public static class ListNode {
+        public int val; public ListNode next;
+        public ListNode(int val) { this.val = val; }
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        var pq = new PriorityQueue<ListNode>(Comparator.comparingInt(n -> n.val));
+        for (var head : lists) if (head != null) pq.offer(head);
+        var dummy = new ListNode(0);
+        var tail = dummy;
+        while (!pq.isEmpty()) {
+            var min = pq.poll();
+            tail.next = min;
+            tail = min;
+            if (min.next != null) pq.offer(min.next);
+        }
+        return dummy.next;
+    }
+}`),
+        mk("Reverse Linked List Nodes in k-Group", "Hard", "var Type Inference", "O(n)", "O(n / k)",
+          "Reverse the nodes of a linked list `k` at a time and leave any trailing nodes fewer than `k` untouched.",
+          "Verify `k` nodes exist ahead, reverse the `k`-node segment in-place, and recursively attach the remaining list.",
+`public class ReverseKGroupSolver {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        var probe = head;
+        for (var i = 0; i < k; i++) {
+            if (probe == null) return head;
+            probe = probe.next;
+        }
+        ListNode prev = null, curr = head;
+        for (var i = 0; i < k; i++) {
+            var next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head.next = reverseKGroup(curr, k);
+        return prev;
+    }
+}`)
+      ],
+      // Module 4: Stacks, Monotonic Queues & Deques
+      [
+        mk("Balanced Brackets Validator via Switch Expression", "Easy", "Switch Expressions (JEP 361)", "O(n)", "O(n)",
+          "Determine whether an input string of `()`, `{}`, and `[]` brackets is validly nested and closed.",
+          "Push expected closing delimiters onto an `ArrayDeque` using a Java 17 arrow switch and verify pops on closing characters.",
+`public class BalancedBrackets {
+    public boolean isValid(String s) {
+        var stack = new ArrayDeque<Character>();
+        for (var c : s.toCharArray()) {
+            switch (c) {
+                case '(' -> stack.push(')');
+                case '{' -> stack.push('}');
+                case '[' -> stack.push(']');
+                default -> { if (stack.isEmpty() || stack.pop() != c) return false; }
+            }
+        }
+        return stack.isEmpty();
+    }
+}`),
+        mk("O(1) MinStack Using Immutable Frame Records", "Medium", "Records (JEP 395)", "O(1)", "O(n)",
+          "Design a stack supporting `push`, `pop`, `top`, and `getMin` in strict `O(1)` time per operation.",
+          "Store `Frame(int value, int minSoFar)` records in an `ArrayDeque` so every stack level remembers its prefix minimum.",
+`public class MinStack {
+    private record Frame(int value, int minSoFar) {}
+    private final Deque<Frame> stack = new ArrayDeque<>();
+
+    public void push(int val) {
+        var min = stack.isEmpty() ? val : Math.min(val, stack.peek().minSoFar());
+        stack.push(new Frame(val, min));
+    }
+
+    public void pop() { stack.pop(); }
+    public int top() { return stack.peek().value(); }
+    public int getMin() { return stack.peek().minSoFar(); }
+}`),
+        mk("Largest Rectangle Area in Histogram (Monotonic Stack)", "Hard", "var Type Inference", "O(n)", "O(n)",
+          "Given an array of bar heights of unit width, compute the area of the largest axis-aligned rectangle inside the histogram.",
+          "Maintain a monotonic increasing stack of bar indices and compute width `i - stack.peek() - 1` when popping taller bars.",
+`public class LargestHistogramArea {
+    public int largestRectangleArea(int[] heights) {
+        var n = heights.length;
+        var stack = new ArrayDeque<Integer>();
+        var maxArea = 0;
+        for (var i = 0; i <= n; i++) {
+            var h = (i == n) ? 0 : heights[i];
+            while (!stack.isEmpty() && h < heights[stack.peek()]) {
+                var height = heights[stack.pop()];
+                var width = stack.isEmpty() ? i : i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, height * width);
+            }
+            stack.push(i);
+        }
+        return maxArea;
+    }
+}`),
+        mk("Sliding Window Maximum via Monotonic ArrayDeque", "Hard", "var Type Inference", "O(n)", "O(k)",
+          "Given an integer array `nums` and window size `k`, return the maximum value in every window of size `k` in `O(n)` time.",
+          "Keep candidate indices in decreasing order of `nums[idx]` inside an `ArrayDeque`, evicting expired front indices and smaller tail indices.",
+`public class SlidingWindowMax {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        var n = nums.length;
+        var out = new int[n - k + 1];
+        var deque = new ArrayDeque<Integer>();
+        for (var i = 0; i < n; i++) {
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) deque.pollFirst();
+            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) deque.pollLast();
+            deque.offerLast(i);
+            if (i >= k - 1) out[i - k + 1] = nums[deque.peekFirst()];
+        }
+        return out;
+    }
+}`)
+      ],
+      // Module 5: Hashing, Maps & Bit Manipulation
+      [
+        mk("O(1) LRU Cache via Access-Ordered LinkedHashMap", "Medium", "var Type Inference", "O(1)", "O(capacity)",
+          "Implement an LRU Cache supporting `O(1)` `get` and `put` operations with automatic eviction of the least-recently-accessed key.",
+          "Subclass `LinkedHashMap` with `accessOrder = true` and override `removeEldestEntry` when `size() > capacity`.",
+`public class LruCache extends LinkedHashMap<Integer, Integer> {
+    private final int capacity;
+
+    public LruCache(int capacity) {
+        super(capacity, 0.75f, true);
+        this.capacity = capacity;
+    }
+
+    public int getOrMinusOne(int key) {
+        return super.getOrDefault(key, -1);
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+        return size() > capacity;
+    }
+}`),
+        mk("Longest Consecutive Integer Streak in O(n)", "Medium", "var Type Inference", "O(n)", "O(n)",
+          "Given an unsorted array of integers `nums`, find the length of the longest consecutive sequence in `O(n)` average time.",
+          "Load all values into a `HashSet` and count upward only from true sequence heads (`!set.contains(x - 1)`).",
+`public class LongestConsecutiveStreak {
+    public int longestConsecutive(int[] nums) {
+        var set = new HashSet<Integer>();
+        for (var x : nums) set.add(x);
+        var best = 0;
+        for (var x : set) {
+            if (!set.contains(x - 1)) {
+                var cur = x;
+                while (set.contains(cur + 1)) cur++;
+                best = Math.max(best, cur - x + 1);
+            }
+        }
+        return best;
+    }
+}`),
+        mk("BitSet Bloom Filter with Dual Hash Mixing", "Medium", "BitSet & Vector Math", "O(k)", "O(m bits)",
+          "Implement a space-efficient Bloom Filter using `java.util.BitSet` and `k` hash probes supporting `add` and `mightContain`.",
+          "Combine primary and rotated 32-bit hashes `(h1 + i * h2) & Integer.MAX_VALUE % bitSize` to set and query bits.",
+`public class BitSetBloomFilter {
+    private final BitSet bits;
+    private final int bitSize;
+    private final int k;
+
+    public BitSetBloomFilter(int bitSize, int k) {
+        this.bitSize = bitSize;
+        this.k = k;
+        this.bits = new BitSet(bitSize);
+    }
+
+    public void add(String key) {
+        int h1 = key.hashCode(), h2 = Integer.rotateLeft(h1, 16) ^ 0x9E3779B9;
+        for (var i = 0; i < k; i++) bits.set(((h1 + i * h2) & Integer.MAX_VALUE) % bitSize);
+    }
+
+    public boolean mightContain(String key) {
+        int h1 = key.hashCode(), h2 = Integer.rotateLeft(h1, 16) ^ 0x9E3779B9;
+        for (var i = 0; i < k; i++) {
+            if (!bits.get(((h1 + i * h2) & Integer.MAX_VALUE) % bitSize)) return false;
+        }
+        return true;
+    }
+}`),
+        mk("Single Number Among Triplets via Bitwise State Machine", "Medium", "BitSet & Vector Math", "O(n)", "O(1)",
+          "Given an integer array where every element appears three times except one element appearing once, find that single element in `O(1)` space.",
+          "Track modulo-3 bit counts across two integer bitmasks `ones` and `twos` using bitwise XOR and AND-NOT transitions.",
+`public class SingleNumberTriplets {
+    public int singleNumber(int[] nums) {
+        int ones = 0, twos = 0;
+        for (var x : nums) {
+            ones = (ones ^ x) & ~twos;
+            twos = (twos ^ x) & ~ones;
+        }
+        return ones;
+    }
+}`)
+      ],
+      // Module 6: Binary Trees, BST & Tries
+      [
+        mk("Sealed Algebraic Binary Tree with Pattern Matching", "Medium", "Sealed Interfaces (JEP 409)", "O(n)", "O(h)",
+          "Model an immutable Binary Tree using Java 17 `sealed interface Tree permits Leaf, Branch` and compute the sum of all node values.",
+          "Define `Leaf()` and `Branch(int val, Tree left, Tree right)` records implementing `Tree` and match via `instanceof` pattern variables.",
+`public class SealedBinaryTree {
+    public sealed interface Tree permits Leaf, Branch {}
+    public record Leaf() implements Tree {}
+    public record Branch(int val, Tree left, Tree right) implements Tree {}
+
+    public int sum(Tree node) {
+        if (node instanceof Leaf) return 0;
+        if (node instanceof Branch b) return b.val() + sum(b.left()) + sum(b.right());
+        throw new IllegalStateException("Closed sealed hierarchy");
+    }
+}`),
+        mk("Validate Binary Search Tree (Strict Open Interval)", "Medium", "var Type Inference", "O(n)", "O(h)",
+          "Given the `root` of a binary tree, determine whether it satisfies the strict Binary Search Tree ordering invariant.",
+          "Propagate `(minExclusive, maxExclusive)` `long` bounds recursively down left and right subtrees.",
+`public class ValidateBst {
+    public static class TreeNode { public int val; public TreeNode left, right; }
+
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean validate(TreeNode node, long min, long max) {
+        if (node == null) return true;
+        if (node.val <= min || node.val >= max) return false;
+        return validate(node.left, min, node.val) && validate(node.right, node.val, max);
+    }
+}`),
+        mk("Iterative Segment Tree for Range Sum & Point Update", "Medium", "BitSet & Vector Math", "O(log n)", "O(n)",
+          "Implement an array-backed Segment Tree supporting `update(index, val)` and `sumRange(left, right)` in `O(log n)` time.",
+          "Store leaf values in `[n..2n-1]` of an `int[2n]` array and aggregate parent nodes bottom-up via bit shifts.",
+`public class SegmentTree {
+    private final int n;
+    private final int[] tree;
+
+    public SegmentTree(int[] nums) {
+        this.n = nums.length;
+        this.tree = new int[2 * n];
+        System.arraycopy(nums, 0, tree, n, n);
+        for (var i = n - 1; i > 0; i--) tree[i] = tree[i << 1] + tree[i << 1 | 1];
+    }
+
+    public void update(int index, int val) {
+        var pos = index + n;
+        tree[pos] = val;
+        while (pos > 1) {
+            tree[pos >> 1] = tree[pos] + tree[pos ^ 1];
+            pos >>= 1;
+        }
+    }
+
+    public int sumRange(int left, int right) {
+        var sum = 0;
+        for (int l = left + n, r = right + n + 1; l < r; l >>= 1, r >>= 1) {
+            if ((l & 1) == 1) sum += tree[l++];
+            if ((r & 1) == 1) sum += tree[--r];
+        }
+        return sum;
+    }
+}`),
+        mk("Prefix Trie (Insert, Exact Search & StartsWith)", "Medium", "var Type Inference", "O(L)", "O(total chars)",
+          "Implement a lowercase English `Trie` supporting `insert(word)`, `search(word)`, and `startsWith(prefix)`.",
+          "Traverse 26-branch child arrays from `root` and check `node.isWord` on full word lookups.",
+`public class PrefixTrie {
+    private static class Node { final Node[] next = new Node[26]; boolean isWord; }
+    private final Node root = new Node();
+
+    public void insert(String word) {
+        var cur = root;
+        for (var c : word.toCharArray()) {
+            if (cur.next[c - 'a'] == null) cur.next[c - 'a'] = new Node();
+            cur = cur.next[c - 'a'];
+        }
+        cur.isWord = true;
+    }
+
+    public boolean search(String word) {
+        var n = walk(word);
+        return n != null && n.isWord;
+    }
+
+    public boolean startsWith(String prefix) { return walk(prefix) != null; }
+
+    private Node walk(String s) {
+        var cur = root;
+        for (var c : s.toCharArray()) {
+            cur = cur.next[c - 'a'];
+            if (cur == null) return null;
+        }
+        return cur;
+    }
+}`)
+      ],
+      // Module 7: Heaps, PriorityQueues & Intervals
+      [
+        mk("Merge Overlapping Intervals Using Interval Records", "Medium", "Records (JEP 395)", "O(n log n)", "O(n)",
+          "Given a list of `Interval(int start, int end)` records, merge all overlapping intervals and return an immutable sorted list.",
+          "Sort intervals by `start` ascending and merge each overlapping interval into the tail record when `curr.start() <= prev.end()`.",
+`public class MergeIntervals {
+    public record Interval(int start, int end) {}
+
+    public List<Interval> merge(List<Interval> intervals) {
+        if (intervals.isEmpty()) return List.of();
+        var sorted = intervals.stream().sorted(Comparator.comparingInt(Interval::start)).toList();
+        var merged = new ArrayList<Interval>();
+        merged.add(sorted.get(0));
+        for (var i = 1; i < sorted.size(); i++) {
+            var prev = merged.get(merged.size() - 1);
+            var curr = sorted.get(i);
+            if (curr.start() <= prev.end()) {
+                merged.set(merged.size() - 1, new Interval(prev.start(), Math.max(prev.end(), curr.end())));
+            } else {
+                merged.add(curr);
+            }
+        }
+        return List.copyOf(merged);
+    }
+}`),
+        mk("Running Median from Data Stream (Dual Heaps)", "Hard", "var Type Inference", "addNum: O(log n), median: O(1)", "O(n)",
+          "Design `MedianFinder` supporting `addNum(int num)` in `O(log n)` and `findMedian()` in `O(1)` time.",
+          "Maintain a max-heap `lower` and a min-heap `upper` balanced so `lower.size() == upper.size()` or `upper.size() + 1`.",
+`public class MedianFinder {
+    private final PriorityQueue<Integer> lower = new PriorityQueue<>(Comparator.reverseOrder());
+    private final PriorityQueue<Integer> upper = new PriorityQueue<>();
+
+    public void addNum(int num) {
+        lower.offer(num);
+        upper.offer(lower.poll());
+        if (lower.size() < upper.size()) lower.offer(upper.poll());
+    }
+
+    public double findMedian() {
+        return lower.size() > upper.size() ? lower.peek() : (lower.peek() + upper.peek()) / 2.0;
+    }
+}`),
+        mk("Minimum Meeting Rooms Required (End-Time Min-Heap)", "Medium", "Records (JEP 395)", "O(n log n)", "O(n)",
+          "Given a list of meeting `Interval(int start, int end)` records, return the minimum number of conference rooms required.",
+          "Sort meetings by `start` time and track active room end-times in a min-`PriorityQueue<Integer>`.",
+`public class MeetingRoomsII {
+    public record Interval(int start, int end) {}
+
+    public int minMeetingRooms(List<Interval> meetings) {
+        if (meetings.isEmpty()) return 0;
+        var sorted = meetings.stream().sorted(Comparator.comparingInt(Interval::start)).toList();
+        var endTimes = new PriorityQueue<Integer>();
+        for (var m : sorted) {
+            if (!endTimes.isEmpty() && endTimes.peek() <= m.start()) endTimes.poll();
+            endTimes.offer(m.end());
+        }
+        return endTimes.size();
+    }
+}`)
+      ],
+      // Module 8: Graphs, Shortest Paths & Disjoint Sets
+      [
+        mk("Course Schedule Topological Order (Kahn's BFS)", "Medium", "var Type Inference", "O(V + E)", "O(V + E)",
+          "Given `numCourses` and prerequisite pairs `[course, prereq]`, return a valid topological ordering or an empty array if a cycle exists.",
+          "Compute in-degrees for all vertices, enqueue 0-indegree nodes into an `ArrayDeque`, and decrement neighbor in-degrees.",
+`public class CourseScheduleTopo {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        var adj = new ArrayList<List<Integer>>(numCourses);
+        for (var i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
+        var indegree = new int[numCourses];
+        for (var p : prerequisites) { adj.get(p[1]).add(p[0]); indegree[p[0]]++; }
+        var q = new ArrayDeque<Integer>();
+        for (var i = 0; i < numCourses; i++) if (indegree[i] == 0) q.offer(i);
+        var order = new int[numCourses];
+        var idx = 0;
+        while (!q.isEmpty()) {
+            var u = q.poll();
+            order[idx++] = u;
+            for (var v : adj.get(u)) if (--indegree[v] == 0) q.offer(v);
+        }
+        return idx == numCourses ? order : new int[0];
+    }
+}`),
+        mk("Network Delay Time via Dijkstra & State Records", "Medium", "Records (JEP 395)", "O(E log V)", "O(V + E)",
+          "Given `n` nodes and weighted directed edges `(u, v, w)`, return the time for all nodes to receive a signal sent from `k`, or `-1`.",
+          "Run Dijkstra's algorithm with `Edge(int to, int weight)` and `State(int node, int dist)` records in a min-`PriorityQueue`.",
+`public class NetworkDelayDijkstra {
+    private record Edge(int to, int weight) {}
+    private record State(int node, int dist) {}
+
+    public int networkDelayTime(int[][] times, int n, int k) {
+        var adj = new ArrayList<List<Edge>>(n + 1);
+        for (var i = 0; i <= n; i++) adj.add(new ArrayList<>());
+        for (var t : times) adj.get(t[0]).add(new Edge(t[1], t[2]));
+        var dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k] = 0;
+        var pq = new PriorityQueue<State>(Comparator.comparingInt(State::dist));
+        pq.offer(new State(k, 0));
+        while (!pq.isEmpty()) {
+            var cur = pq.poll();
+            if (cur.dist() > dist[cur.node()]) continue;
+            for (var e : adj.get(cur.node())) {
+                if (cur.dist() + e.weight() < dist[e.to()]) {
+                    dist[e.to()] = cur.dist() + e.weight();
+                    pq.offer(new State(e.to(), dist[e.to()]));
+                }
+            }
+        }
+        var maxWait = 0;
+        for (var i = 1; i <= n; i++) {
+            if (dist[i] == Integer.MAX_VALUE) return -1;
+            maxWait = Math.max(maxWait, dist[i]);
+        }
+        return maxWait;
+    }
+}`),
+        mk("Redundant Graph Edge Detection via Union-Find (DSU)", "Medium", "var Type Inference", "O(n * alpha(n))", "O(n)",
+          "Given an undirected tree of `n` nodes with one extra edge added, return the edge that forms a cycle.",
+          "Use Disjoint Set Union with path halving; the first edge whose endpoints already share the same root is redundant.",
+`public class RedundantEdgeDsu {
+    public int[] findRedundantConnection(int[][] edges) {
+        var n = edges.length;
+        var parent = new int[n + 1];
+        for (var i = 1; i <= n; i++) parent[i] = i;
+        for (var e : edges) {
+            int r1 = find(parent, e[0]), r2 = find(parent, e[1]);
+            if (r1 == r2) return e;
+            parent[r1] = r2;
+        }
+        return new int[0];
+    }
+
+    private int find(int[] p, int x) {
+        while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; }
+        return x;
+    }
+}`)
+      ],
+      // Module 9: Dynamic Programming & Greedy
+      [
+        mk("Coin Change Minimum Coins (Bottom-Up 1D DP)", "Medium", "var Type Inference", "O(amount * coins)", "O(amount)",
+          "Given coin denominations `coins` and a target `amount`, return the minimum number of coins needed to make `amount`, or `-1`.",
+          "Fill `dp[0..amount]` initialized to `amount + 1`, updating `dp[a] = Math.min(dp[a], dp[a - c] + 1)`.",
+`public class CoinChangeSolver {
+    public int coinChange(int[] coins, int amount) {
+        var dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (var a = 1; a <= amount; a++) {
+            for (var c : coins) if (c <= a) dp[a] = Math.min(dp[a], dp[a - c] + 1);
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+}`),
+        mk("Longest Increasing Subsequence in O(n log n)", "Medium", "var Type Inference", "O(n log n)", "O(n)",
+          "Given an integer array `nums`, return the length of the longest strictly increasing subsequence in `O(n log n)` time.",
+          "Maintain `tails` storing the minimum possible tail value for each increasing subsequence length via `Collections.binarySearch`.",
+`public class LongestIncreasingSubseq {
+    public int lengthOfLIS(int[] nums) {
+        var tails = new ArrayList<Integer>();
+        for (var x : nums) {
+            var idx = Collections.binarySearch(tails, x);
+            if (idx < 0) idx = -(idx + 1);
+            if (idx == tails.size()) tails.add(x);
+            else tails.set(idx, x);
+        }
+        return tails.size();
+    }
+}`),
+        mk("Edit Distance (Levenshtein 2D Tabulation)", "Hard", "var Type Inference", "O(m * n)", "O(m * n)",
+          "Given two strings `w1` and `w2`, compute the minimum number of insert, delete, or replace operations to transform `w1` into `w2`.",
+          "Tabulate `dp[i][j]` over prefixes `w1[0..i)` and `w2[0..j)` taking `1 + min(replace, delete, insert)` on mismatched characters.",
+`public class EditDistanceSolver {
+    public int minDistance(String w1, String w2) {
+        int m = w1.length(), n = w2.length();
+        var dp = new int[m + 1][n + 1];
+        for (var i = 0; i <= m; i++) dp[i][0] = i;
+        for (var j = 0; j <= n; j++) dp[0][j] = j;
+        for (var i = 1; i <= m; i++) {
+            for (var j = 1; j <= n; j++) {
+                dp[i][j] = (w1.charAt(i - 1) == w2.charAt(j - 1))
+                    ? dp[i - 1][j - 1]
+                    : 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));
+            }
+        }
+        return dp[m][n];
+    }
+}`)
+      ],
+      // Module 10: Java 17+ Internals, Concurrency & JVM
+      [
+        mk("Java 17 HashMap Treeification & Bin Splitting Internals", "Java Internals", "ConcurrentHashMap & CAS", "Avg: O(1), Tree: O(log n)", "O(n)",
+          "Demonstrate OpenJDK 17 `HashMap` collision treeification thresholds (`TREEIFY_THRESHOLD = 8`, `UNTREEIFY_THRESHOLD = 6`, `MIN_TREEIFY_CAPACITY = 64`).",
+          "When a hash bucket reaches 8 nodes and table capacity is at least 64, Java 17 converts the linked `Node` bin into a Red-Black `TreeNode` bin.",
+`public class HashMapTreeificationInternals {
+    public static final int TREEIFY_THRESHOLD = 8;
+    public static final int UNTREEIFY_THRESHOLD = 6;
+    public static final int MIN_TREEIFY_CAPACITY = 64;
+
+    public record CollidingKey(int id) {
+        @Override public int hashCode() { return 0x17; }
+    }
+
+    public Map<CollidingKey, String> createTreeifiedBucket(int count) {
+        var map = new HashMap<CollidingKey, String>(MIN_TREEIFY_CAPACITY);
+        for (var i = 0; i < count; i++) map.put(new CollidingKey(i), "Node-" + i);
+        return map;
+    }
+}`),
+        mk("Lock-Free Treiber Stack Using AtomicReference CAS", "Java Internals", "ConcurrentHashMap & CAS", "Lock-free O(1) expected", "O(n)",
+          "Implement a non-blocking, thread-safe Treiber Stack using `AtomicReference` Compare-And-Swap and immutable Java 17 `Node` records.",
+          "Loop reading `head.get()` and atomically swinging the top pointer via `compareAndSet` without acquiring locks.",
+`public class LockFreeTreiberStack<T> {
+    private record Node<T>(T value, Node<T> next) {}
+    private final AtomicReference<Node<T>> head = new AtomicReference<>(null);
+
+    public void push(T value) {
+        Node<T> cur, next;
+        do {
+            cur = head.get();
+            next = new Node<>(value, cur);
+        } while (!head.compareAndSet(cur, next));
+    }
+
+    public Optional<T> pop() {
+        Node<T> cur, next;
+        do {
+            cur = head.get();
+            if (cur == null) return Optional.empty();
+            next = cur.next();
+        } while (!head.compareAndSet(cur, next));
+        return Optional.of(cur.value());
+    }
+}`),
+        mk("Optimistic Read Geometry with StampedLock", "Java Internals", "StampedLock & LongAdder", "Optimistic Read: O(1)", "O(1)",
+          "Implement a thread-safe 2D coordinate tracker using Java 17 `StampedLock` optimistic reads so concurrent readers never block writers.",
+          "Acquire an optimistic stamp via `tryOptimisticRead()`, copy coordinates locally, and validate with `lock.validate(stamp)`.",
+`public class StampedLockCoordinates {
+    private double x, y;
+    private final StampedLock lock = new StampedLock();
+
+    public void translate(double dx, double dy) {
+        var stamp = lock.writeLock();
+        try { x += dx; y += dy; }
+        finally { lock.unlockWrite(stamp); }
+    }
+
+    public double hypot() {
+        var stamp = lock.tryOptimisticRead();
+        double cx = x, cy = y;
+        if (!lock.validate(stamp)) {
+            stamp = lock.readLock();
+            try { cx = x; cy = y; }
+            finally { lock.unlockRead(stamp); }
+        }
+        return Math.hypot(cx, cy);
+    }
+}`),
+        mk("Multi-Line Text Block JVM Diagnostic Formatter", "Easy", "Text Blocks (JEP 378)", "O(1)", "O(1)",
+          "Format a structured JSON diagnostic report for JVM heap metrics using Java 17 Text Blocks (`\"\"\"`) and `.formatted(...)`.",
+          "Use a triple-quoted Java 17 text block to preserve clean JSON indentation without escaped quotes or newline characters.",
+`public class JvmDiagnosticsTextBlock {
+    public String renderJson(String gcName, long usedMb, long maxMb) {
+        return """
+            {
+              "runtime": "OpenJDK 17 LTS",
+              "garbageCollector": "%s",
+              "heapUsedMb": %d,
+              "heapMaxMb": %d
+            }
+            """.formatted(gcName, usedMb, maxMb);
+    }
+}`)
+      ]
+    ];
+
+    /* =========================================================================
+       3. DETERMINISTIC 1-TO-1 LAZY MATERIALIZER FOR ALL 5,000 QUESTIONS
+       Stores lightweight index metadata at startup (<15ms boot) and builds
+       each question's exact matched title, problem prompt, approach, complexity,
+       and runnable Java 17+ solution deterministically on demand.
+       ========================================================================= */
+    function materializeQuestion(id) {
+      const mIdx = Math.floor((id - 1) / 500);
+      const slot = (id - 1) % 500;
+      const modName = MODULES[mIdx].name;
+      const curatedList = CURATED[mIdx];
+
+      if (slot < curatedList.length) {
+        return { id, moduleIdx: mIdx, module: modName, ...curatedList[slot] };
+      }
+
+      // Deterministic, problem-specific parameterization for slots 4..499 in each module
+      const k = (slot % 45) + 2;
+      const band = slot % 10;
+
+      // Module 1 (#1..#500): Arrays & Two Pointers
+      if (mIdx === 0) {
+        if (band < 2) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Maximum Sum Subarray of Exact Length ${k} (Fixed Window #${slot + 1})`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n)", space: "O(1)",
+            statement: `Given an integer array \`nums\` of length \`n >= ${k}\`, compute the maximum sum over all contiguous subarrays of exact length \`${k}\`.`,
+            approach: `Sum the initial \`${k}\` elements, then slide across \`${k}..n-1\` adding \`nums[i]\` and subtracting \`nums[i - ${k}]\`.`,
+            code:
+`public class MaxWindowSum${k}_${id} {
+    public long maxSumLength${k}(int[] nums) {
+        var sum = 0L;
+        for (var i = 0; i < ${k}; i++) sum += nums[i];
+        var best = sum;
+        for (var i = ${k}; i < nums.length; i++) {
+            sum += nums[i] - nums[i - ${k}];
+            best = Math.max(best, sum);
+        }
+        return best;
+    }
+}`
+          };
+        } else if (band < 4) {
+          const mod = (slot % 29) + 3;
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count Subarrays with Sum Divisible by ${mod} (Prefix Remainder)`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: `O(${mod})`,
+            statement: `Given an integer array \`nums\`, count all non-empty contiguous subarrays whose sum is an integer multiple of \`${mod}\`.`,
+            approach: `Normalize running prefix sum remainders \`((prefix % ${mod}) + ${mod}) % ${mod}\` into a \`${mod}\`-slot frequency table.`,
+            code:
+`public class SubarraysMod${mod}_${id} {
+    public int countDivisible(int[] nums) {
+        var freq = new int[${mod}];
+        freq[0] = 1;
+        int prefix = 0, count = 0;
+        for (var x : nums) {
+            prefix = ((prefix + x) % ${mod} + ${mod}) % ${mod};
+            count += freq[prefix]++;
+        }
+        return count;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Closest Sorted Pair to Target +${k} Returning PairRecord`,
+            difficulty: "Easy", feature: "Records (JEP 395)", time: "O(n)", space: "O(1)",
+            statement: `Given a sorted integer array \`nums\` and a base \`target\`, return a \`PairRecord(int left, int right)\` whose sum is closest to \`target + ${k}\`.`,
+            approach: `Use converging pointers \`l = 0\` and \`r = nums.length - 1\`, minimizing \`Math.abs((long) nums[l] + nums[r] - (target + ${k}))\`.`,
+            code:
+`public class ClosestPairRecord${k}_${id} {
+    public record PairRecord(int left, int right) {}
+
+    public PairRecord closestPair(int[] nums, int target) {
+        var goal = (long) target + ${k};
+        int l = 0, r = nums.length - 1;
+        var bestDiff = Long.MAX_VALUE;
+        var best = new PairRecord(nums[l], nums[r]);
+        while (l < r) {
+            var sum = (long) nums[l] + nums[r];
+            var diff = Math.abs(sum - goal);
+            if (diff < bestDiff) { bestDiff = diff; best = new PairRecord(nums[l], nums[r]); }
+            if (sum < goal) l++; else r--;
+        }
+        return best;
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Rotate Array Left by ${k} Positions In-Place (Reversal Algorithm)`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n)", space: "O(1)",
+            statement: `Rotate an integer array \`nums\` to the left by \`${k}\` positions in-place using \`O(1)\` auxiliary memory.`,
+            approach: `Compute \`s = ${k} % n\`, reverse \`[0..s-1]\`, reverse \`[s..n-1]\`, and reverse \`[0..n-1]\`.`,
+            code:
+`public class RotateLeft${k}_${id} {
+    public void rotateLeft(int[] nums) {
+        var n = nums.length;
+        if (n <= 1) return;
+        var s = ${k} % n;
+        if (s == 0) return;
+        rev(nums, 0, s - 1);
+        rev(nums, s, n - 1);
+        rev(nums, 0, n - 1);
+    }
+
+    private void rev(int[] a, int l, int r) {
+        while (l < r) { var t = a[l]; a[l++] = a[r]; a[r--] = t; }
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count Subarrays with At Most ${k} Distinct Integers`,
+            difficulty: "Hard", feature: "var Type Inference", time: "O(n)", space: `O(${k})`,
+            statement: `Given an integer array \`nums\`, return the exact count of contiguous subarrays containing at most \`${k}\` distinct values.`,
+            approach: `Maintain a sliding window frequency map and accumulate \`right - left + 1\` for each right boundary while \`counts.size() <= ${k}\`.`,
+            code:
+`public class AtMost${k}Distinct_${id} {
+    public long countAtMost${k}(int[] nums) {
+        var counts = new HashMap<Integer, Integer>();
+        var left = 0;
+        var total = 0L;
+        for (var right = 0; right < nums.length; right++) {
+            counts.merge(nums[right], 1, Integer::sum);
+            while (counts.size() > ${k}) {
+                var v = nums[left++];
+                if (counts.merge(v, -1, Integer::sum) == 0) counts.remove(v);
+            }
+            total += right - left + 1;
+        }
+        return total;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 2 (#501..#1000): Strings & Sliding Window
+      if (mIdx === 1) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Longest Substring with At Most ${k} Distinct Characters`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: `O(${k})`,
+            statement: `Given a string \`s\`, return the maximum length of a substring containing at most \`${k}\` distinct characters.`,
+            approach: `Expand \`right\` in a frequency map and advance \`left\` whenever \`counts.size() > ${k}\`.`,
+            code:
+`public class LongestAtMost${k}Chars_${id} {
+    public int longestSubstring(String s) {
+        var counts = new HashMap<Character, Integer>();
+        int left = 0, best = 0;
+        for (var right = 0; right < s.length(); right++) {
+            counts.merge(s.charAt(right), 1, Integer::sum);
+            while (counts.size() > ${k}) {
+                var lc = s.charAt(left++);
+                if (counts.merge(lc, -1, Integer::sum) == 0) counts.remove(lc);
+            }
+            best = Math.max(best, right - left + 1);
+        }
+        return best;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Collapse Adjacent Duplicate Character Runs of Length ${k}`,
+            difficulty: "Medium", feature: "Records (JEP 395)", time: "O(n)", space: "O(n)",
+            statement: `Repeatedly remove every contiguous run of \`${k}\` identical adjacent characters in \`s\` until no run of length \`${k}\` remains.`,
+            approach: `Store \`Run(char ch, int len)\` records on an \`ArrayDeque\` and pop immediately when \`len == ${k}\`.`,
+            code:
+`public class CollapseRun${k}_${id} {
+    private record Run(char ch, int len) {}
+
+    public String removeDuplicates(String s) {
+        var stack = new ArrayDeque<Run>();
+        for (var c : s.toCharArray()) {
+            if (!stack.isEmpty() && stack.peek().ch() == c) {
+                var top = stack.pop();
+                if (top.len() + 1 < ${k}) stack.push(new Run(c, top.len() + 1));
+            } else {
+                stack.push(new Run(c, 1));
+            }
+        }
+        var sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            var r = stack.removeLast();
+            sb.append(String.valueOf(r.ch()).repeat(r.len()));
+        }
+        return sb.toString();
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Rabin-Karp Polynomial Rolling Hash for Length-${k} Pattern`,
+            difficulty: "Medium", feature: "BitSet & Vector Math", time: "O(n + m) expected", space: "O(1)",
+            statement: `Return the first index where \`pattern\` of exact length \`${k}\` matches \`text\` using base-31 rolling hash modulo \`1_000_000_007\`.`,
+            approach: `Precompute \`31^(${k}-1) % MOD\`, slide the rolling hash across \`text\`, and verify \`regionMatches\` on collisions.`,
+            code:
+`public class RabinKarp${k}_${id} {
+    private static final long MOD = 1_000_000_007L, BASE = 31L;
+
+    public int findPattern(String text, String pattern) {
+        if (pattern.length() != ${k} || text.length() < ${k}) return -1;
+        long pHash = 0, wHash = 0, pow = 1;
+        for (var i = 0; i < ${k} - 1; i++) pow = (pow * BASE) % MOD;
+        for (var i = 0; i < ${k}; i++) {
+            pHash = (pHash * BASE + pattern.charAt(i)) % MOD;
+            wHash = (wHash * BASE + text.charAt(i)) % MOD;
+        }
+        for (var i = 0; i <= text.length() - ${k}; i++) {
+            if (pHash == wHash && text.regionMatches(i, pattern, 0, ${k})) return i;
+            if (i + ${k} < text.length()) {
+                wHash = (wHash - text.charAt(i) * pow % MOD + MOD) % MOD;
+                wHash = (wHash * BASE + text.charAt(i + ${k})) % MOD;
+            }
+        }
+        return -1;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Case-Preserving Caesar Cipher Rotation by +${k}`,
+            difficulty: "Easy", feature: "Switch Expressions (JEP 361)", time: "O(n)", space: "O(n)",
+            statement: `Rotate ASCII letters in \`s\` forward by \`${k}\` positions while keeping uppercase/lowercase case and leaving non-letters unchanged.`,
+            approach: `Use a Java 17 switch expression over \`Character.getType(ch)\` to apply modular 26 rotation.`,
+            code:
+`public class CaesarShift${k}_${id} {
+    public String encode(String s) {
+        var sb = new StringBuilder(s.length());
+        for (var ch : s.toCharArray()) {
+            sb.append(switch (Character.getType(ch)) {
+                case Character.UPPERCASE_LETTER -> (char) ('A' + (ch - 'A' + ${k}) % 26);
+                case Character.LOWERCASE_LETTER -> (char) ('a' + (ch - 'a' + ${k}) % 26);
+                default -> ch;
+            });
+        }
+        return sb.toString();
+    }
+}`
+          };
+        }
+      }
+
+      // Module 3 (#1001..#1500): Linked Lists & Pointer Manipulation
+      if (mIdx === 2) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Delete Every ${k}-th Node in a Singly Linked List`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n)", space: "O(1)",
+            statement: `Given the \`head\` of a singly linked list, delete every \`${k}\`-th node (1-indexed) and return the modified list head.`,
+            approach: `Maintain a 1-based position counter while traversing and unlink \`curr.next = curr.next.next\` whenever \`(pos + 1) % ${k} == 0\`.`,
+            code:
+`public class DeleteEvery${k}th_${id} {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode prune(ListNode head) {
+        var curr = head;
+        var pos = 1;
+        while (curr != null && curr.next != null) {
+            if ((pos + 1) % ${k} == 0) { curr.next = curr.next.next; pos++; }
+            else { curr = curr.next; pos++; }
+        }
+        return head;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Split Singly Linked List into ${k} Balanced Parts`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: `O(${k})`,
+            statement: `Partition a singly linked list into \`${k}\` consecutive parts whose sizes differ by at most 1.`,
+            approach: `Count total nodes \`len\`, allocate \`len / ${k}\` nodes plus 1 extra to the first \`len % ${k}\` buckets, and null-terminate each slice.`,
+            code:
+`public class SplitList${k}Parts_${id} {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode[] split(ListNode head) {
+        var len = 0;
+        for (var c = head; c != null; c = c.next) len++;
+        int base = len / ${k}, extra = len % ${k};
+        var parts = new ListNode[${k}];
+        var cur = head;
+        for (var i = 0; i < ${k} && cur != null; i++) {
+            parts[i] = cur;
+            var size = base + (i < extra ? 1 : 0);
+            for (var s = 1; s < size; s++) cur = cur.next;
+            var next = cur.next;
+            cur.next = null;
+            cur = next;
+        }
+        return parts;
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Rotate Linked List Right by ${k} Places`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: "O(1)",
+            statement: `Rotate a singly linked list to the right by \`${k}\` nodes in \`O(n)\` time and \`O(1)\` extra space.`,
+            approach: `Connect the tail to \`head\` to form a ring of length \`len\`, advance \`len - (${k} % len)\` steps, and break the ring.`,
+            code:
+`public class RotateListRight${k}_${id} {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public ListNode rotateRight(ListNode head) {
+        if (head == null || head.next == null) return head;
+        var len = 1;
+        var tail = head;
+        while (tail.next != null) { tail = tail.next; len++; }
+        var shift = ${k} % len;
+        if (shift == 0) return head;
+        tail.next = head;
+        for (var i = 0; i < len - shift; i++) tail = tail.next;
+        var newHead = tail.next;
+        tail.next = null;
+        return newHead;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Retrieve ${k}-th Node Value from List Tail (Single Pass)`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n)", space: "O(1)",
+            statement: `Return the value of the \`${k}\`-th node from the end of a singly linked list (1-indexed), or \`-1\` if fewer than \`${k}\` nodes exist.`,
+            approach: `Advance \`fast\` by \`${k}\` nodes first, then advance \`slow\` and \`fast\` in lockstep until \`fast == null\`.`,
+            code:
+`public class KthFromEnd${k}_${id} {
+    public static class ListNode { public int val; public ListNode next; }
+
+    public int valueFromEnd(ListNode head) {
+        ListNode fast = head, slow = head;
+        for (var i = 0; i < ${k}; i++) {
+            if (fast == null) return -1;
+            fast = fast.next;
+        }
+        while (fast != null) { slow = slow.next; fast = fast.next; }
+        return slow.val;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 4 (#1501..#2000): Stacks, Monotonic Queues & Deques
+      if (mIdx === 3) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Sliding Window Minimum of Fixed Width ${k} (Monotonic Deque)`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: `O(${k})`,
+            statement: `Compute the minimum integer inside every contiguous sliding window of size \`${k}\` across \`nums\` in \`O(n)\` time.`,
+            approach: `Maintain an increasing \`ArrayDeque<Integer>\` of indices, pruning front indices \`< i - ${k} + 1\` and larger tail values.`,
+            code:
+`public class SlidingWindowMin${k}_${id} {
+    public int[] minWindow(int[] nums) {
+        var n = nums.length;
+        if (n < ${k}) return new int[0];
+        var ans = new int[n - ${k} + 1];
+        var dq = new ArrayDeque<Integer>();
+        for (var i = 0; i < n; i++) {
+            while (!dq.isEmpty() && dq.peekFirst() < i - ${k} + 1) dq.pollFirst();
+            while (!dq.isEmpty() && nums[dq.peekLast()] >= nums[i]) dq.pollLast();
+            dq.offerLast(i);
+            if (i >= ${k} - 1) ans[i - ${k} + 1] = nums[dq.peekFirst()];
+        }
+        return ans;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Fixed-Capacity Circular Deque (Max Size ${k})`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(1)", space: `O(${k})`,
+            statement: `Implement a circular ring buffer queue of exact capacity \`${k}\` with \`O(1)\` \`offer\`, \`poll\`, \`peekFront\`, and \`peekRear\`.`,
+            approach: `Track \`head\` and \`count\` over \`new int[${k}]\` using modular arithmetic \`(head + count) % ${k}\`.`,
+            code:
+`public class CircularQueue${k}_${id} {
+    private final int[] buf = new int[${k}];
+    private int head = 0, count = 0;
+
+    public boolean offer(int val) {
+        if (count == ${k}) return false;
+        buf[(head + count) % ${k}] = val;
+        count++;
+        return true;
+    }
+
+    public int poll() {
+        if (count == 0) return -1;
+        var val = buf[head];
+        head = (head + 1) % ${k};
+        count--;
+        return val;
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Remove ${k} Digits to Form Smallest Possible Number`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: "O(n)",
+            statement: `Remove exactly \`${k}\` digits from non-negative numeric string \`num\` so the resulting integer string is minimal.`,
+            approach: `Greedily pop larger top digits from a monotonic \`ArrayDeque<Character>\` up to \`${k}\` times and strip leading zeros.`,
+            code:
+`public class Remove${k}Digits_${id} {
+    public String minimize(String num) {
+        var rem = ${k};
+        var stack = new ArrayDeque<Character>();
+        for (var c : num.toCharArray()) {
+            while (rem > 0 && !stack.isEmpty() && stack.peek() > c) { stack.pop(); rem--; }
+            stack.push(c);
+        }
+        while (rem-- > 0 && !stack.isEmpty()) stack.pop();
+        var sb = new StringBuilder();
+        while (!stack.isEmpty()) sb.append(stack.removeLast());
+        while (sb.length() > 1 && sb.charAt(0) == '0') sb.deleteCharAt(0);
+        return sb.isEmpty() ? "0" : sb.toString();
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Next Greater Element Within Lookahead Distance ${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n)", space: "O(n)",
+            statement: `For each index \`i\` in \`nums\`, find the first strictly greater value to its right within \`j - i <= ${k}\`, or \`-1\`.`,
+            approach: `Maintain a monotonic decreasing stack of indices and record \`nums[i]\` only if \`i - poppedIdx <= ${k}\`.`,
+            code:
+`public class BoundedNextGreater${k}_${id} {
+    public int[] nextGreater(int[] nums) {
+        var n = nums.length;
+        var ans = new int[n];
+        Arrays.fill(ans, -1);
+        var stack = new ArrayDeque<Integer>();
+        for (var i = 0; i < n; i++) {
+            while (!stack.isEmpty() && nums[i] > nums[stack.peek()]) {
+                var idx = stack.pop();
+                if (i - idx <= ${k}) ans[idx] = nums[i];
+            }
+            stack.push(i);
+        }
+        return ans;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 5 (#2001..#2500): Hashing, Maps & Bit Manipulation
+      if (mIdx === 4) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Specialized ${k}-Entry LRU Cache via LinkedHashMap`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(1)", space: `O(${k})`,
+            statement: `Implement a fixed-size \`${k}\`-entry LRU Cache evicting the least recently accessed entry upon overflow.`,
+            approach: `Initialize \`LinkedHashMap\` with \`accessOrder = true\` and return \`size() > ${k}\` in \`removeEldestEntry\`.`,
+            code:
+`public class LruCache${k}_${id} extends LinkedHashMap<Integer, Integer> {
+    public LruCache${k}_${id}() { super(${k}, 0.75f, true); }
+
+    public int read(int key) { return super.getOrDefault(key, -1); }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+        return size() > ${k};
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Find Elements Appearing Strictly More Than n / ${k} Times`,
+            difficulty: "Medium", feature: "Immutable Collections", time: "O(n)", space: "O(n)",
+            statement: `Given an integer array \`nums\` of length \`n\`, return an immutable list of all elements occurring more than \`n / ${k}\` times.`,
+            approach: `Tally counts via \`HashMap.merge\` and stream-filter keys exceeding \`nums.length / ${k}\`.`,
+            code:
+`public class HeavyHittersDiv${k}_${id} {
+    public List<Integer> findHeavyHitters(int[] nums) {
+        var counts = new HashMap<Integer, Integer>();
+        for (var x : nums) counts.merge(x, 1, Integer::sum);
+        var limit = nums.length / ${k};
+        return counts.entrySet().stream()
+            .filter(e -> e.getValue() > limit)
+            .map(Map.Entry::getKey)
+            .toList();
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count Numbers with Exactly ${k} Set Bits in Range [0..n]`,
+            difficulty: "Easy", feature: "BitSet & Vector Math", time: "O(n)", space: "O(1)",
+            statement: `Count how many integers in \`0..n\` have a Hamming weight (popcount) equal to \`${k}\`.`,
+            approach: `Use hardware-accelerated \`Integer.bitCount(i) == ${k}\` across \`0..n\`.`,
+            code:
+`public class Popcount${k}Counter_${id} {
+    public int countWith${k}Bits(int n) {
+        var matches = 0;
+        for (var i = 0; i <= n; i++) {
+            if (Integer.bitCount(i) == ${k}) matches++;
+        }
+        return matches;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count Pairs with XOR Equal to Constant Mask ${k}`,
+            difficulty: "Easy", feature: "BitSet & Vector Math", time: "O(n)", space: "O(n)",
+            statement: `Given an integer array \`nums\`, count pairs \`(i, j)\` with \`i < j\` such that \`(nums[i] ^ nums[j]) == ${k}\`.`,
+            approach: `Since \`a ^ b == ${k} <=> b == a ^ ${k}\`, look up \`seen.getOrDefault(x ^ ${k}, 0)\` in one pass.`,
+            code:
+`public class XorMask${k}Pairs_${id} {
+    public long countXorPairs(int[] nums) {
+        var seen = new HashMap<Integer, Integer>();
+        var pairs = 0L;
+        for (var x : nums) {
+            pairs += seen.getOrDefault(x ^ ${k}, 0);
+            seen.merge(x, 1, Integer::sum);
+        }
+        return pairs;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 6 (#2501..#3000): Binary Trees, BST & Tries
+      if (mIdx === 5) {
+        const depth = (slot % 20) + 1;
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Sum All Binary Tree Node Values at Exact Depth ${depth}`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n)", space: "O(w)",
+            statement: `Given the \`root\` of a binary tree (root at depth 0), return the sum of all node values at depth \`${depth}\`.`,
+            approach: `Perform level-order BFS with an \`ArrayDeque<TreeNode>\` and sum values once level \`${depth}\` is reached.`,
+            code:
+`public class Level${depth}Sum_${id} {
+    public static class TreeNode { public int val; public TreeNode left, right; }
+
+    public int sumAtDepth(TreeNode root) {
+        if (root == null) return 0;
+        var q = new ArrayDeque<TreeNode>();
+        q.offer(root);
+        for (var d = 0; !q.isEmpty(); d++) {
+            var sz = q.size();
+            var sum = 0;
+            for (var i = 0; i < sz; i++) {
+                var cur = q.poll();
+                if (d == ${depth}) sum += cur.val;
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+            }
+            if (d == ${depth}) return sum;
+        }
+        return 0;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count BST Nodes Inside Interval [low, low + ${k}]`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(n) worst, O(h + k) avg", space: "O(h)",
+            statement: `Given a BST \`root\` and integer \`low\`, count how many nodes have values inside \`[low, low + ${k}]\`.`,
+            approach: `Prune left branches when \`node.val < low\` and right branches when \`node.val > low + ${k}\`.`,
+            code:
+`public class BstSpanCount${k}_${id} {
+    public static class TreeNode { public int val; public TreeNode left, right; }
+
+    public int countRange(TreeNode root, int low) {
+        if (root == null) return 0;
+        var high = low + ${k};
+        if (root.val < low) return countRange(root.right, low);
+        if (root.val > high) return countRange(root.left, low);
+        return 1 + countRange(root.left, low) + countRange(root.right, low);
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Fenwick Tree Point Increment (+${k}) & Prefix Sum`,
+            difficulty: "Medium", feature: "BitSet & Vector Math", time: "O(log n)", space: "O(n)",
+            statement: `Implement a Binary Indexed Tree supporting \`add${k}(index)\` and \`prefixSum(index)\` in \`O(log n)\` time.`,
+            approach: `Propagate updates via \`i += i & -i\` and query prefix totals via \`i -= i & -i\`.`,
+            code:
+`public class FenwickAdd${k}_${id} {
+    private final int[] bit;
+
+    public FenwickAdd${k}_${id}(int n) { this.bit = new int[n + 1]; }
+
+    public void add${k}(int idx) {
+        for (var i = idx + 1; i < bit.length; i += i & -i) bit[i] += ${k};
+    }
+
+    public int prefixSum(int idx) {
+        var s = 0;
+        for (var i = idx + 1; i > 0; i -= i & -i) s += bit[i];
+        return s;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Trie Prefix Frequency Query for Length-${depth} Prefixes`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(L)", space: "O(total chars)",
+            statement: `Insert lowercase words into a Trie and query how many inserted words share a given prefix of length \`${depth}\`.`,
+            approach: `Increment \`passCount\` on every traversed Trie node during insertion and return \`node.passCount\` after \`${depth}\` steps.`,
+            code:
+`public class TriePrefixLen${depth}_${id} {
+    private static class Node { final Node[] next = new Node[26]; int pass; }
+    private final Node root = new Node();
+
+    public void insert(String w) {
+        var cur = root;
+        for (var c : w.toCharArray()) {
+            if (cur.next[c - 'a'] == null) cur.next[c - 'a'] = new Node();
+            cur = cur.next[c - 'a'];
+            cur.pass++;
+        }
+    }
+
+    public int countPrefix(String prefix) {
+        if (prefix.length() != ${depth}) throw new IllegalArgumentException("Expected length ${depth}");
+        var cur = root;
+        for (var c : prefix.toCharArray()) {
+            cur = cur.next[c - 'a'];
+            if (cur == null) return 0;
+        }
+        return cur.pass;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 7 (#3001..#3500): Heaps, PriorityQueues & Intervals
+      if (mIdx === 6) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Find ${k}-th Smallest Element via Bounded Max-Heap`,
+            difficulty: "Medium", feature: "var Type Inference", time: `O(n log ${k})`, space: `O(${k})`,
+            statement: `Given an unsorted array \`nums\` of length \`>= ${k}\`, return its \`${k}\`-th smallest element using a size-\`${k}\` max-heap.`,
+            approach: `Offer elements into \`new PriorityQueue<Integer>(Comparator.reverseOrder())\` and evict \`poll()\` whenever \`size() > ${k}\`.`,
+            code:
+`public class KthSmallest${k}_${id} {
+    public int find${k}thSmallest(int[] nums) {
+        var maxHeap = new PriorityQueue<Integer>(${k} + 1, Comparator.reverseOrder());
+        for (var x : nums) {
+            maxHeap.offer(x);
+            if (maxHeap.size() > ${k}) maxHeap.poll();
+        }
+        return maxHeap.peek();
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Top ${k} Priority Jobs via Java 17 JobRecord Heap`,
+            difficulty: "Easy", feature: "Records (JEP 395)", time: `O(n log ${k})`, space: `O(${k})`,
+            statement: `Given a list of \`JobRecord(String name, int weight)\`, return the top \`${k}\` highest-weight jobs in descending order.`,
+            approach: `Maintain a min-heap of size \`${k}\` keyed by \`JobRecord::weight\`, then sort the retained \`${k}\` records descending.`,
+            code:
+`public class Top${k}Jobs_${id} {
+    public record JobRecord(String name, int weight) {}
+
+    public List<JobRecord> topJobs(List<JobRecord> jobs) {
+        var pq = new PriorityQueue<JobRecord>(Comparator.comparingInt(JobRecord::weight));
+        for (var j : jobs) {
+            pq.offer(j);
+            if (pq.size() > ${k}) pq.poll();
+        }
+        var out = new ArrayList<>(pq);
+        out.sort(Comparator.comparingInt(JobRecord::weight).reversed());
+        return List.copyOf(out);
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Huffman Stick Merging with Fixed Overhead +${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(n log n)", space: "O(n)",
+            statement: `Combine \`n\` sticks into one where merging two sticks of lengths \`a\` and \`b\` costs \`a + b + ${k}\`. Minimize total cost.`,
+            approach: `Repeatedly poll the two shortest sticks from a min-\`PriorityQueue<Long>\`, accumulate \`a + b + ${k}\`, and push \`a + b\`.`,
+            code:
+`public class MergeSticksCost${k}_${id} {
+    public long minCost(int[] sticks) {
+        var pq = new PriorityQueue<Long>();
+        for (var s : sticks) pq.offer((long) s);
+        var cost = 0L;
+        while (pq.size() > 1) {
+            var combined = pq.poll() + pq.poll();
+            cost += combined + ${k};
+            pq.offer(combined);
+        }
+        return cost;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Maximize Array Sum After ${k} Min-Heap Negations`,
+            difficulty: "Easy", feature: "var Type Inference", time: `O(n + ${k} log n)`, space: "O(n)",
+            statement: `Perform exactly \`${k}\` operations where each operation negates \`nums[i] = -nums[i]\` to maximize the array's final sum.`,
+            approach: `Load all integers into a min-\`PriorityQueue<Integer>\` and negate the minimum element \`${k}\` times.`,
+            code:
+`public class Negate${k}Times_${id} {
+    public int maximizeSum(int[] nums) {
+        var pq = new PriorityQueue<Integer>();
+        for (var x : nums) pq.offer(x);
+        for (var step = 0; step < ${k}; step++) pq.offer(-pq.poll());
+        var sum = 0;
+        while (!pq.isEmpty()) sum += pq.poll();
+        return sum;
+    }
+}`
+          };
+        }
+      }
+
+      // Module 8 (#3501..#4000): Graphs, Shortest Paths & Disjoint Sets
+      if (mIdx === 7) {
+        const hops = (slot % 20) + 1;
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Count Vertices Reachable Within ${hops} Hops (Level BFS)`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(V + E)", space: "O(V)",
+            statement: `Given a directed graph of \`n\` vertices and a \`start\` node, count how many vertices are reachable in at most \`${hops}\` edges.`,
+            approach: `Run level-limited BFS with \`ArrayDeque<Integer>\` and \`boolean[] seen\` for \`${hops}\` layers.`,
+            code:
+`public class ReachableIn${hops}Hops_${id} {
+    public int countReachable(int n, List<List<Integer>> adj, int start) {
+        var seen = new boolean[n];
+        var q = new ArrayDeque<Integer>();
+        seen[start] = true;
+        q.offer(start);
+        var count = 1;
+        for (var step = 0; step < ${hops} && !q.isEmpty(); step++) {
+            for (int i = 0, sz = q.size(); i < sz; i++) {
+                for (var nxt : adj.get(q.poll())) {
+                    if (!seen[nxt]) { seen[nxt] = true; count++; q.offer(nxt); }
+                }
+            }
+        }
+        return count;
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Cheapest Flight Within ${hops} Intermediate Stops`,
+            difficulty: "Medium", feature: "var Type Inference", time: `O(${hops} * E)`, space: "O(V)",
+            statement: `Find the lowest-cost path from \`src\` to \`dst\` using at most \`${hops}\` intermediate stops, or \`-1\` if none exists.`,
+            approach: `Execute \`${hops} + 1\` Bellman-Ford edge-relaxation rounds using a cloned distance snapshot per round.`,
+            code:
+`public class CheapestFlight${hops}Stops_${id} {
+    public int minCost(int n, int[][] flights, int src, int dst) {
+        var dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+        for (var r = 0; r <= ${hops}; r++) {
+            var next = dist.clone();
+            for (var f : flights) {
+                if (dist[f[0]] != Integer.MAX_VALUE && dist[f[0]] + f[2] < next[f[1]]) {
+                    next[f[1]] = dist[f[0]] + f[2];
+                }
+            }
+            dist = next;
+        }
+        return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Uniform Edge Weight ${k} Shortest Path Distance (BFS)`,
+            difficulty: "Easy", feature: "var Type Inference", time: "O(V + E)", space: "O(V)",
+            statement: `In a directed graph where every edge has weight \`${k}\`, return the shortest distance from \`src\` to \`dst\`, or \`-1\`.`,
+            approach: `Compute minimum hop count via unweighted BFS and multiply by \`${k}\`.`,
+            code:
+`public class UniformWeight${k}Bfs_${id} {
+    public int shortestPath(int n, List<List<Integer>> adj, int src, int dst) {
+        if (src == dst) return 0;
+        var seen = new boolean[n];
+        var q = new ArrayDeque<Integer>();
+        seen[src] = true;
+        q.offer(src);
+        var steps = 0;
+        while (!q.isEmpty()) {
+            steps++;
+            for (int i = 0, sz = q.size(); i < sz; i++) {
+                for (var nxt : adj.get(q.poll())) {
+                    if (nxt == dst) return steps * ${k};
+                    if (!seen[nxt]) { seen[nxt] = true; q.offer(nxt); }
+                }
+            }
+        }
+        return -1;
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `First Union-Find Edge Creating Component of Size >= ${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(E * alpha(V))", space: "O(V)",
+            statement: `Process undirected \`edges\` incrementally and return the 0-based index of the first edge forming a component of size \`>= ${k}\`, or \`-1\`.`,
+            approach: `Maintain \`size[root]\` alongside \`parent[root]\` in Disjoint Set Union and return \`i\` immediately when \`size[r1] >= ${k}\`.`,
+            code:
+`public class DsuComponentSize${k}_${id} {
+    public int firstEdgeReachingSize(int n, int[][] edges) {
+        var parent = new int[n];
+        var size = new int[n];
+        for (var i = 0; i < n; i++) { parent[i] = i; size[i] = 1; }
+        for (var i = 0; i < edges.length; i++) {
+            int r1 = find(parent, edges[i][0]), r2 = find(parent, edges[i][1]);
+            if (r1 != r2) {
+                parent[r2] = r1;
+                size[r1] += size[r2];
+                if (size[r1] >= ${k}) return i;
+            }
+        }
+        return -1;
+    }
+
+    private int find(int[] p, int x) {
+        return p[x] == x ? x : (p[x] = find(p, p[x]));
+    }
+}`
+          };
+        }
+      }
+
+      // Module 9 (#4001..#4500): Dynamic Programming & Greedy
+      if (mIdx === 8) {
+        if (band < 3) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Climbing Stairs Allowing Step Sizes 1..${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: `O(n * ${k})`, space: "O(n)",
+            statement: `Count distinct ways to reach step \`n\` when each move advances \`1, 2, ..., ${k}\` steps.`,
+            approach: `Bottom-up 1D DP where \`dp[i] = sum(dp[i - step])\` for \`step = 1..min(i, ${k})\`.`,
+            code:
+`public class ClimbStairsMax${k}_${id} {
+    public long countWays(int n) {
+        var dp = new long[n + 1];
+        dp[0] = 1L;
+        for (var i = 1; i <= n; i++) {
+            for (var s = 1; s <= Math.min(i, ${k}); s++) dp[i] += dp[i - s];
+        }
+        return dp[n];
+    }
+}`
+          };
+        } else if (band < 6) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `0/1 Knapsack Maximum Value for Capacity ${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: `O(n * ${k})`, space: `O(${k})`,
+            statement: `Select a subset of items with given \`weights\` and \`values\` maximizing total value without exceeding capacity \`${k}\`.`,
+            approach: `Update 1D table \`dp[0..${k}]\` in descending weight order \`w = ${k}..weights[i]\`.`,
+            code:
+`public class KnapsackCap${k}_${id} {
+    public int maxValue(int[] weights, int[] values) {
+        var dp = new int[${k} + 1];
+        for (var i = 0; i < weights.length; i++) {
+            for (var w = ${k}; w >= weights[i]; w--) {
+                dp[w] = Math.max(dp[w], dp[w - weights[i]] + values[i]);
+            }
+        }
+        return dp[${k}];
+    }
+}`
+          };
+        } else if (band < 8) {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Backtrack All ${k}-Element Combinations from 1..N`,
+            difficulty: "Medium", feature: "Immutable Collections", time: `O(C(n, ${k}) * ${k})`, space: `O(${k})`,
+            statement: `Return all distinct \`${k}\`-element combinations chosen from \`[1..n]\` using remaining-capacity pruning.`,
+            approach: `Bound loop upper limit at \`n - (${k} - path.size()) + 1\` and snapshot leaves with \`List.copyOf(path)\`.`,
+            code:
+`public class Combinations${k}_${id} {
+    public List<List<Integer>> combine(int n) {
+        var out = new ArrayList<List<Integer>>();
+        dfs(1, n, new ArrayList<>(), out);
+        return out;
+    }
+
+    private void dfs(int start, int n, List<Integer> path, List<List<Integer>> out) {
+        if (path.size() == ${k}) { out.add(List.copyOf(path)); return; }
+        var maxStart = n - (${k} - path.size()) + 1;
+        for (var i = start; i <= maxStart; i++) {
+            path.add(i);
+            dfs(i + 1, n, path, out);
+            path.remove(path.size() - 1);
+        }
+    }
+}`
+          };
+        } else {
+          return {
+            id, moduleIdx: mIdx, module: modName,
+            title: `Min Grid Path Sum with Rightward Step Tax +${k}`,
+            difficulty: "Medium", feature: "var Type Inference", time: "O(m * n)", space: "O(n)",
+            statement: `Find the minimum-cost path from \`(0,0)\` to \`(m-1,n-1)\` moving only down or right, where each right step adds \`${k}\` extra tax.`,
+            approach: `Maintain a rolling 1D DP row combining vertical transitions \`dp[c]\` and taxed horizontal transitions \`dp[c - 1] + ${k}\`.`,
+            code:
+`public class GridPathRightTax${k}_${id} {
+    public int minPathSum(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        var dp = new int[n];
+        dp[0] = grid[0][0];
+        for (var c = 1; c < n; c++) dp[c] = dp[c - 1] + grid[0][c] + ${k};
+        for (var r = 1; r < m; r++) {
+            dp[0] += grid[r][0];
+            for (var c = 1; c < n; c++) dp[c] = grid[r][c] + Math.min(dp[c], dp[c - 1] + ${k});
+        }
+        return dp[n - 1];
+    }
+}`
+          };
+        }
+      }
+
+      // Module 10 (#4501..#5000): Java 17+ Internals, Concurrency & JVM
+      if (band < 2) {
+        return {
+          id, moduleIdx: mIdx, module: modName,
+          title: `Thread-Safe Bounded Ring Buffer of Capacity ${k} (ReentrantLock)`,
+          difficulty: "Java Internals", feature: "ConcurrentHashMap & CAS", time: "O(1) per op", space: `O(${k})`,
+          statement: `Implement a blocking bounded FIFO queue holding \`${k}\` elements using \`ReentrantLock\` and \`notFull\` / \`notEmpty\` conditions.`,
+          approach: `Guard circular array indices with \`lockInterruptibly()\` and \`while\` condition loops to guard against spurious wakeups.`,
+          code:
+`public class BoundedBuffer${k}_${id}<E> {
+    private final Object[] items = new Object[${k}];
+    private int head = 0, tail = 0, count = 0;
+    private final ReentrantLock lock = new ReentrantLock();
+    private final Condition notFull = lock.newCondition();
+    private final Condition notEmpty = lock.newCondition();
+
+    public void put(E e) throws InterruptedException {
+        lock.lockInterruptibly();
+        try {
+            while (count == ${k}) notFull.await();
+            items[tail] = e;
+            tail = (tail + 1) % ${k};
+            count++;
+            notEmpty.signal();
+        } finally { lock.unlock(); }
+    }
+
+    @SuppressWarnings("unchecked")
+    public E take() throws InterruptedException {
+        lock.lockInterruptibly();
+        try {
+            while (count == 0) notEmpty.await();
+            var e = (E) items[head];
+            items[head] = null;
+            head = (head + 1) % ${k};
+            count--;
+            notFull.signal();
+            return e;
+        } finally { lock.unlock(); }
+    }
+}`
+        };
+      } else if (band < 4) {
+        return {
+          id, moduleIdx: mIdx, module: modName,
+          title: `Striped Low-Contention Counter Across ${k} LongAdder Cells`,
+          difficulty: "Java Internals", feature: "StampedLock & LongAdder", time: "O(1) contention-free", space: `O(${k})`,
+          statement: `Partition high-frequency concurrent increments across \`${k}\` \`LongAdder\` cells to eliminate false sharing and CAS contention.`,
+          approach: `Hash keys with \`Math.floorMod(key.hashCode(), ${k})\` into independent \`LongAdder\` instances and sum lazily.`,
+          code:
+`public class StripedCounter${k}_${id} {
+    private final LongAdder[] stripes = new LongAdder[${k}];
+
+    public StripedCounter${k}_${id}() {
+        Arrays.setAll(stripes, i -> new LongAdder());
+    }
+
+    public void add(String key, long delta) {
+        stripes[Math.floorMod(key.hashCode(), ${k})].add(delta);
+    }
+
+    public long total() {
+        var sum = 0L;
+        for (var s : stripes) sum += s.sum();
+        return sum;
+    }
+}`
+        };
+      } else if (band < 6) {
+        return {
+          id, moduleIdx: mIdx, module: modName,
+          title: `Pattern Matching instanceof Stream Aggregator (Limit ${k})`,
+          difficulty: "Medium", feature: "Pattern Matching instanceof (JEP 394)", time: "O(n)", space: "O(1)",
+          statement: `Filter a stream of Java 17 \`sealed interface Event permits Metric, Audit\` and sum the first \`${k}\` \`Metric\` values without casts.`,
+          approach: `Use Java 17 pattern matching \`if (ev instanceof Metric m)\` to extract \`m.value()\` directly.`,
+          code:
+`public class SealedEventReducer${k}_${id} {
+    public sealed interface Event permits Metric, Audit {}
+    public record Metric(String key, long value) implements Event {}
+    public record Audit(String message) implements Event {}
+
+    public long sumFirst${k}Metrics(List<Event> events) {
+        var sum = 0L;
+        var seen = 0;
+        for (var ev : events) {
+            if (ev instanceof Metric m) {
+                sum += m.value();
+                if (++seen == ${k}) break;
+            }
+        }
+        return sum;
+    }
+}`
+        };
+      } else if (band < 8) {
+        return {
+          id, moduleIdx: mIdx, module: modName,
+          title: `Immutable Rolling Window of Last ${k} Event Records`,
+          difficulty: "Easy", feature: "Records (JEP 395)", time: "O(1) append", space: `O(${k})`,
+          statement: `Maintain a thread-safe rolling audit buffer retaining only the latest \`${k}\` \`LogRecord(long ts, String msg)\` entries.`,
+          approach: `Evict the oldest record from an \`ArrayDeque\` when \`size() == ${k}\` and expose defensive snapshots via \`List.copyOf\`.`,
+          code:
+`public class RollingAuditLog${k}_${id} {
+    public record LogRecord(long ts, String msg) {}
+    private final Deque<LogRecord> ring = new ArrayDeque<>(${k});
+
+    public synchronized void append(long ts, String msg) {
+        if (ring.size() == ${k}) ring.pollFirst();
+        ring.offerLast(new LogRecord(ts, msg));
+    }
+
+    public synchronized List<LogRecord> snapshot() {
+        return List.copyOf(ring);
+    }
+}`
+        };
+      } else {
+        return {
+          id, moduleIdx: mIdx, module: modName,
+          title: `Nanosecond Token Bucket Rate Limiter (${k} Burst Tokens)`,
+          difficulty: "Java Internals", feature: "ConcurrentHashMap & CAS", time: "O(1)", space: "O(1)",
+          statement: `Implement a monotonic \`System.nanoTime()\` Token Bucket rate limiter with burst capacity \`${k}\` and refill rate \`${k}\` tokens/sec.`,
+          approach: `Replenish tokens proportionally to elapsed monotonic nanoseconds capped at \`${k}.0\` before consuming 1 token.`,
+          code:
+`public class TokenBucket${k}_${id} {
+    private static final double MAX_TOKENS = ${k}.0;
+    private static final double RATE_PER_NS = ${k}.0 / 1_000_000_000.0;
+    private double tokens = MAX_TOKENS;
+    private long lastTick = System.nanoTime();
+
+    public synchronized boolean tryAcquire() {
+        var now = System.nanoTime();
+        tokens = Math.min(MAX_TOKENS, tokens + (now - lastTick) * RATE_PER_NS);
+        lastTick = now;
+        if (tokens >= 1.0) { tokens -= 1.0; return true; }
+        return false;
+    }
+}`
+        };
+      }
+    }
+
+    /* =========================================================================
+       4. LIGHTWEIGHT INDEX OF ALL 5,000 QUESTIONS (<15ms STARTUP)
+       ========================================================================= */
+    const TOTAL_QUESTIONS = 5000;
+    const QUESTION_INDEX = new Array(TOTAL_QUESTIONS);
+    const CACHE = new Map();
+
+    function getQuestion(id) {
+      let item = CACHE.get(id);
+      if (!item) {
+        item = materializeQuestion(id);
+        CACHE.set(id, item);
+      }
+      return item;
+    }
+
+    // Build compact metadata descriptors for fast instant search & filtering across 5,000 Qs
+    for (let id = 1; id <= TOTAL_QUESTIONS; id++) {
+      const mIdx = Math.floor((id - 1) / 500);
+      const slot = (id - 1) % 500;
+      const curatedList = CURATED[mIdx];
+      if (slot < curatedList.length) {
+        const c = curatedList[slot];
+        QUESTION_INDEX[id - 1] = {
+          id, mIdx, title: c.title, difficulty: c.difficulty,
+          feature: c.feature, time: c.time, space: c.space,
+          searchKey: `#${id} ${c.title} ${MODULES[mIdx].name} ${c.feature} ${c.difficulty}`.toLowerCase()
+        };
+      } else {
+        // Compute lightweight header metadata without allocating full code strings yet
+        const k = (slot % 45) + 2;
+        const band = slot % 10;
+        const depth = (slot % 20) + 1;
+        let title = "", difficulty = "Medium", feature = "var Type Inference", time = "O(n)", space = "O(1)";
+        if (mIdx === 0) {
+          if (band < 2) { title = `Maximum Sum Subarray of Exact Length ${k} (Fixed Window #${slot + 1})`; difficulty = "Easy"; }
+          else if (band < 4) { const mod = (slot % 29) + 3; title = `Count Subarrays with Sum Divisible by ${mod} (Prefix Remainder)`; space = `O(${mod})`; }
+          else if (band < 6) { title = `Closest Sorted Pair to Target +${k} Returning PairRecord`; difficulty = "Easy"; feature = "Records (JEP 395)"; }
+          else if (band < 8) { title = `Rotate Array Left by ${k} Positions In-Place (Reversal Algorithm)`; difficulty = "Easy"; }
+          else { title = `Count Subarrays with At Most ${k} Distinct Integers`; difficulty = "Hard"; space = `O(${k})`; }
+        } else if (mIdx === 1) {
+          if (band < 3) { title = `Longest Substring with At Most ${k} Distinct Characters`; space = `O(${k})`; }
+          else if (band < 6) { title = `Collapse Adjacent Duplicate Character Runs of Length ${k}`; feature = "Records (JEP 395)"; space = "O(n)"; }
+          else if (band < 8) { title = `Rabin-Karp Polynomial Rolling Hash for Length-${k} Pattern`; feature = "BitSet & Vector Math"; time = "O(n + m) expected"; }
+          else { title = `Case-Preserving Caesar Cipher Rotation by +${k}`; difficulty = "Easy"; feature = "Switch Expressions (JEP 361)"; space = "O(n)"; }
+        } else if (mIdx === 2) {
+          if (band < 3) { title = `Delete Every ${k}-th Node in a Singly Linked List`; difficulty = "Easy"; }
+          else if (band < 6) { title = `Split Singly Linked List into ${k} Balanced Parts`; space = `O(${k})`; }
+          else if (band < 8) { title = `Rotate Linked List Right by ${k} Places`; }
+          else { title = `Retrieve ${k}-th Node Value from List Tail (Single Pass)`; difficulty = "Easy"; }
+        } else if (mIdx === 3) {
+          if (band < 3) { title = `Sliding Window Minimum of Fixed Width ${k} (Monotonic Deque)`; space = `O(${k})`; }
+          else if (band < 6) { title = `Fixed-Capacity Circular Deque (Max Size ${k})`; difficulty = "Easy"; time = "O(1)"; space = `O(${k})`; }
+          else if (band < 8) { title = `Remove ${k} Digits to Form Smallest Possible Number`; space = "O(n)"; }
+          else { title = `Next Greater Element Within Lookahead Distance ${k}`; space = "O(n)"; }
+        } else if (mIdx === 4) {
+          if (band < 3) { title = `Specialized ${k}-Entry LRU Cache via LinkedHashMap`; time = "O(1)"; space = `O(${k})`; }
+          else if (band < 6) { title = `Find Elements Appearing Strictly More Than n / ${k} Times`; feature = "Immutable Collections"; space = "O(n)"; }
+          else if (band < 8) { title = `Count Numbers with Exactly ${k} Set Bits in Range [0..n]`; difficulty = "Easy"; feature = "BitSet & Vector Math"; }
+          else { title = `Count Pairs with XOR Equal to Constant Mask ${k}`; difficulty = "Easy"; feature = "BitSet & Vector Math"; space = "O(n)"; }
+        } else if (mIdx === 5) {
+          if (band < 3) { title = `Sum All Binary Tree Node Values at Exact Depth ${depth}`; difficulty = "Easy"; space = "O(w)"; }
+          else if (band < 6) { title = `Count BST Nodes Inside Interval [low, low + ${k}]`; difficulty = "Easy"; time = "O(n) worst, O(h + k) avg"; space = "O(h)"; }
+          else if (band < 8) { title = `Fenwick Tree Point Increment (+${k}) & Prefix Sum`; feature = "BitSet & Vector Math"; time = "O(log n)"; space = "O(n)"; }
+          else { title = `Trie Prefix Frequency Query for Length-${depth} Prefixes`; time = "O(L)"; space = "O(total chars)"; }
+        } else if (mIdx === 6) {
+          if (band < 3) { title = `Find ${k}-th Smallest Element via Bounded Max-Heap`; time = `O(n log ${k})`; space = `O(${k})`; }
+          else if (band < 6) { title = `Top ${k} Priority Jobs via Java 17 JobRecord Heap`; difficulty = "Easy"; feature = "Records (JEP 395)"; time = `O(n log ${k})`; space = `O(${k})`; }
+          else if (band < 8) { title = `Huffman Stick Merging with Fixed Overhead +${k}`; time = "O(n log n)"; space = "O(n)"; }
+          else { title = `Maximize Array Sum After ${k} Min-Heap Negations`; difficulty = "Easy"; time = `O(n + ${k} log n)`; space = "O(n)"; }
+        } else if (mIdx === 7) {
+          if (band < 3) { title = `Count Vertices Reachable Within ${hops} Hops (Level BFS)`; time = "O(V + E)"; space = "O(V)"; }
+          else if (band < 6) { title = `Cheapest Flight Within ${hops} Intermediate Stops`; time = `O(${hops} * E)`; space = "O(V)"; }
+          else if (band < 8) { title = `Uniform Edge Weight ${k} Shortest Path Distance (BFS)`; difficulty = "Easy"; time = "O(V + E)"; space = "O(V)"; }
+          else { title = `First Union-Find Edge Creating Component of Size >= ${k}`; time = "O(E * alpha(V))"; space = "O(V)"; }
+        } else if (mIdx === 8) {
+          if (band < 3) { title = `Climbing Stairs Allowing Step Sizes 1..${k}`; time = `O(n * ${k})`; space = "O(n)"; }
+          else if (band < 6) { title = `0/1 Knapsack Maximum Value for Capacity ${k}`; time = `O(n * ${k})`; space = `O(${k})`; }
+          else if (band < 8) { title = `Backtrack All ${k}-Element Combinations from 1..N`; feature = "Immutable Collections"; time = `O(C(n, ${k}) * ${k})`; space = `O(${k})`; }
+          else { title = `Min Grid Path Sum with Rightward Step Tax +${k}`; time = "O(m * n)"; space = "O(n)"; }
+        } else {
+          if (band < 2) { title = `Thread-Safe Bounded Ring Buffer of Capacity ${k} (ReentrantLock)`; difficulty = "Java Internals"; feature = "ConcurrentHashMap & CAS"; time = "O(1) per op"; space = `O(${k})`; }
+          else if (band < 4) { title = `Striped Low-Contention Counter Across ${k} LongAdder Cells`; difficulty = "Java Internals"; feature = "StampedLock & LongAdder"; time = "O(1) contention-free"; space = `O(${k})`; }
+          else if (band < 6) { title = `Pattern Matching instanceof Stream Aggregator (Limit ${k})`; feature = "Pattern Matching instanceof (JEP 394)"; }
+          else if (band < 8) { title = `Immutable Rolling Window of Last ${k} Event Records`; difficulty = "Easy"; feature = "Records (JEP 395)"; time = "O(1) append"; space = `O(${k})`; }
+          else { title = `Nanosecond Token Bucket Rate Limiter (${k} Burst Tokens)`; difficulty = "Java Internals"; feature = "ConcurrentHashMap & CAS"; time = "O(1)"; }
+        }
+        QUESTION_INDEX[id - 1] = {
+          id, mIdx, title, difficulty, feature, time, space,
+          searchKey: `#${id} ${title} ${MODULES[mIdx].name} ${feature} ${difficulty}`.toLowerCase()
+        };
+      }
+    }
+
+    /* =========================================================================
+       5. STATE, STORAGE & UI CONTROLLERS
+       ========================================================================= */
+    const SOLVED_KEY = 'java17_dsa_5000_v1_solved';
+    const BOOKMARK_KEY = 'java17_dsa_5000_v1_bookmarks';
+    const THEME_KEY = 'java17_dsa_5000_v1_theme';
+
+    let solvedSet = new Set(JSON.parse(localStorage.getItem(SOLVED_KEY) || '[]'));
+    let bookmarkSet = new Set(JSON.parse(localStorage.getItem(BOOKMARK_KEY) || '[]'));
+    let expandedSet = new Set();
+
+    let filters = { search: '', module: 'all', difficulty: 'all', feature: 'all', status: 'all' };
+    let currentPage = 1;
+    let pageSize = 50;
+
+    const qListEl = document.getElementById('q-list');
+    const emptyStateEl = document.getElementById('empty-state');
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const moduleSelect = document.getElementById('module-select');
+    const diffSelect = document.getElementById('diff-select');
+    const featureSelect = document.getElementById('feature-select');
+    const statusTabs = document.querySelectorAll('.status-tab');
+    const jumpInput = document.getElementById('jump-input');
+    const pageSizeSelect = document.getElementById('page-size');
+    const visibleCountEl = document.getElementById('visible-count');
+    const rangeInfoEl = document.getElementById('range-info');
+    const topPagerEl = document.getElementById('top-pager');
+    const bottomPagerEl = document.getElementById('bottom-pager');
+    const solvedCountEl = document.getElementById('solved-count');
+    const solvedPctEl = document.getElementById('solved-pct');
+    const progressFillEl = document.getElementById('progress-fill');
+    const bookmarkCountEl = document.getElementById('bookmark-count');
+    const syllabusModal = document.getElementById('syllabus-modal');
+    const syllabusTbody = document.getElementById('syllabus-tbody');
+    const resetModal = document.getElementById('reset-modal');
+    const toastEl = document.getElementById('toast');
+
+    MODULES.forEach((m, idx) => {
+      const opt = document.createElement('option');
+      opt.value = String(idx);
+      opt.textContent = `${m.name} (#${idx * 500 + 1} - #${(idx + 1) * 500})`;
+      moduleSelect.appendChild(opt);
+    });
+
+    function highlightJava(code) {
+      const esc = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return esc
+        .replace(/(\/\/.*)/g, '<span class="tok-com">$1</span>')
+        .replace(/("(?:\\.|[^"\\])*")/g, '<span class="tok-str">$1</span>')
+        .replace(/\b(public|private|protected|static|final|class|record|sealed|interface|permits|return|if|else|for|while|do|switch|case|default|yield|new|var|void|boolean|int|long|double|char|true|false|null|throw|try|finally|instanceof|implements|extends)\b/g, '<span class="tok-kw">$1</span>')
+        .replace(/\b(String|Integer|Long|Double|Boolean|Character|List|ArrayList|Map|HashMap|LinkedHashMap|Set|HashSet|Deque|ArrayDeque|PriorityQueue|BitSet|Optional|ReentrantLock|Condition|StampedLock|AtomicReference|LongAdder|Comparator|Arrays|Collections|Math|StringBuilder|System)\b/g, '<span class="tok-type">$1</span>');
+    }
+
+    function formatInlineCode(text) {
+      return text.replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function getFilteredIndices() {
+      const term = filters.search.trim().toLowerCase();
+      const modFilter = filters.module === 'all' ? -1 : parseInt(filters.module, 10);
+      const out = [];
+      for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const meta = QUESTION_INDEX[i];
+        if (modFilter !== -1 && meta.mIdx !== modFilter) continue;
+        if (filters.difficulty !== 'all' && meta.difficulty !== filters.difficulty) continue;
+        if (filters.feature !== 'all' && meta.feature !== filters.feature) continue;
+        const isSolved = solvedSet.has(meta.id);
+        const isBookmarked = bookmarkSet.has(meta.id);
+        if (filters.status === 'mastered' && !isSolved) continue;
+        if (filters.status === 'bookmarked' && !isBookmarked) continue;
+        if (filters.status === 'pending' && isSolved) continue;
+        if (term !== '' && !meta.searchKey.includes(term)) continue;
+        out.push(meta);
+      }
+      return out;
+    }
+
+    function renderPagerControls(container, totalPages) {
+      if (totalPages <= 1) { container.innerHTML = ''; return; }
+      const start = Math.max(1, currentPage - 2);
+      const end = Math.min(totalPages, start + 4);
+      let nums = '';
+      for (let p = start; p <= end; p++) {
+        nums += `<button type="button" class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+      }
+      container.innerHTML = `
+        <button type="button" class="page-btn" onclick="goPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="First Page">&laquo;</button>
+        <button type="button" class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Previous Page">&lsaquo; Prev</button>
+        ${nums}
+        <button type="button" class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Next Page">Next &rsaquo;</button>
+        <button type="button" class="page-btn" onclick="goPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Last Page">&raquo;</button>
+      `;
+    }
+
+    function renderExpandedBody(id) {
+      const full = getQuestion(id);
+      const isSolved = solvedSet.has(id);
+      return `
+        <div class="detail-grid">
+          <div>
+            <div class="detail-block-label">Problem Statement &amp; Constraints (#${full.id})</div>
+            <div class="detail-box">${formatInlineCode(full.statement)}</div>
+          </div>
+          <div>
+            <div class="detail-block-label" style="color: var(--accent);">Optimal Approach &amp; Java 17+ Idiom Notes</div>
+            <div class="approach-box">${formatInlineCode(full.approach)}</div>
+          </div>
+          <div>
+            <div class="code-header-row">
+              <div class="detail-block-label" style="margin: 0; color: var(--amber);">Verified Java 17+ Solution</div>
+              <button type="button" class="btn" style="height: 30px; padding: 0 10px; font-size: 0.74rem;" onclick="copyCode(${full.id})">&#128203; Copy Java 17 Code</button>
+            </div>
+            <div class="code-shell">
+              <div class="code-shell-top">
+                <span>Problem${full.id}.java</span>
+                <span>Java 17 LTS &bull; ${full.feature}</span>
+              </div>
+              <pre><code>${highlightJava(full.code)}</code></pre>
+            </div>
+          </div>
+          <div class="body-footer">
+            <div class="complexity-pair">
+              <div class="comp-pill">Time: <strong>${full.time}</strong></div>
+              <div class="comp-pill">Space: <strong>${full.space}</strong></div>
+            </div>
+            <button type="button" class="btn ${isSolved ? '' : 'btn-primary'}" onclick="toggleSolved(event, ${full.id})">
+              ${isSolved ? '&#10003; Mastered (Click to Unmark)' : '&#10003; Mark as Mastered'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function render() {
+      const solved = solvedSet.size;
+      const pct = ((solved / TOTAL_QUESTIONS) * 100).toFixed(1).replace(/\.0$/, '');
+      solvedCountEl.textContent = solved.toLocaleString();
+      solvedPctEl.textContent = `${pct}%`;
+      progressFillEl.style.width = `${Math.min(100, (solved / TOTAL_QUESTIONS) * 100)}%`;
+      bookmarkCountEl.textContent = bookmarkSet.size.toLocaleString();
+
+      const filtered = getFilteredIndices();
+      visibleCountEl.textContent = filtered.length.toLocaleString();
+
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      if (currentPage > totalPages) currentPage = 1;
+
+      const startIdx = (currentPage - 1) * pageSize;
+      const endIdx = Math.min(startIdx + pageSize, filtered.length);
+      const slice = filtered.slice(startIdx, endIdx);
+
+      rangeInfoEl.textContent = filtered.length === 0
+        ? 'Showing 0 questions'
+        : `Showing Questions ${(startIdx + 1).toLocaleString()} \u2013 ${endIdx.toLocaleString()} of ${filtered.length.toLocaleString()} (Page ${currentPage} of ${totalPages})`;
+
+      renderPagerControls(topPagerEl, totalPages);
+      renderPagerControls(bottomPagerEl, totalPages);
+
+      if (slice.length === 0) {
+        qListEl.innerHTML = '';
+        emptyStateEl.classList.add('visible');
+        return;
+      }
+      emptyStateEl.classList.remove('visible');
+
+      qListEl.innerHTML = slice.map(meta => {
+        const isSolved = solvedSet.has(meta.id);
+        const isBookmarked = bookmarkSet.has(meta.id);
+        const isOpen = expandedSet.has(meta.id);
+        const diffClass = meta.difficulty === 'Java Internals' ? 'badge-Internals' : `badge-${meta.difficulty}`;
+        return `
+          <article class="q-card ${isSolved ? 'mastered' : ''} ${isOpen ? 'open' : ''}" data-qid="${meta.id}">
+            <div class="q-header" onclick="toggleCard(${meta.id}, event)">
+              <div class="q-left">
+                <button type="button" class="check-toggle ${isSolved ? 'checked' : ''}" onclick="toggleSolved(event, ${meta.id})" aria-label="Toggle mastered for #${meta.id}">&#10003;</button>
+                <div class="q-info">
+                  <div class="q-title-line">
+                    <span class="q-id">#${meta.id}</span>
+                    <h2 class="q-title">${meta.title}</h2>
+                  </div>
+                  <div class="q-subline">
+                    <span class="badge ${diffClass}">${meta.difficulty}</span>
+                    <span class="badge badge-feature">${meta.feature}</span>
+                    <span class="badge badge-module">${MODULES[meta.mIdx].name}</span>
+                    <span class="badge badge-complexity">T: ${meta.time}</span>
+                    <span class="badge badge-complexity">S: ${meta.space}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="q-right">
+                <button type="button" class="star-btn ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(event, ${meta.id})" aria-label="Bookmark #${meta.id}">
+                  ${isBookmarked ? '&#9733;' : '&#9734;'}
+                </button>
+                <span class="chevron">&#9660;</span>
+              </div>
+            </div>
+            <div class="q-body" id="q-body-${meta.id}">${isOpen ? renderExpandedBody(meta.id) : ''}</div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    window.toggleCard = function(id, e) {
+      if (e && e.target.closest('button')) return;
+      const card = document.querySelector(`.q-card[data-qid="${id}"]`);
+      const body = document.getElementById(`q-body-${id}`);
+      if (!card || !body) return;
+      if (expandedSet.has(id)) {
+        expandedSet.delete(id);
+        card.classList.remove('open');
+      } else {
+        expandedSet.add(id);
+        if (!body.innerHTML) body.innerHTML = renderExpandedBody(id);
+        card.classList.add('open');
+      }
+    };
+
+    window.toggleSolved = function(e, id) {
+      if (e) e.stopPropagation();
+      if (solvedSet.has(id)) {
+        solvedSet.delete(id);
+        showToast(`Unmarked #${id}`);
+      } else {
+        solvedSet.add(id);
+        showToast(`Question #${id} marked as Mastered!`);
+      }
+      localStorage.setItem(SOLVED_KEY, JSON.stringify([...solvedSet]));
+      render();
+    };
+
+    window.toggleBookmark = function(e, id) {
+      if (e) e.stopPropagation();
+      if (bookmarkSet.has(id)) {
+        bookmarkSet.delete(id);
+        showToast(`Removed bookmark #${id}`);
+      } else {
+        bookmarkSet.add(id);
+        showToast(`Bookmarked #${id}`);
+      }
+      localStorage.setItem(BOOKMARK_KEY, JSON.stringify([...bookmarkSet]));
+      render();
+    };
+
+    window.copyCode = function(id) {
+      const full = getQuestion(id);
+      const ta = document.createElement('textarea');
+      ta.value = full.code;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(`Copied Question #${id} Java 17+ solution!`);
+    };
+
+    window.goPage = function(p) {
+      currentPage = p;
+      render();
+      window.scrollTo({ top: 150, behavior: 'smooth' });
+    };
+
+    function focusQuestion(targetId) {
+      if (isNaN(targetId) || targetId < 1 || targetId > TOTAL_QUESTIONS) {
+        showToast('Enter a Question ID between 1 and 5000');
+        return;
+      }
+      resetFilters(false);
+      currentPage = Math.ceil(targetId / pageSize);
+      expandedSet.add(targetId);
+      render();
+      requestAnimationFrame(() => {
+        const card = document.querySelector(`.q-card[data-qid="${targetId}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-pulse');
+          setTimeout(() => card.classList.remove('highlight-pulse'), 2400);
+        }
+      });
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      clearTimeout(toastTimer);
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+    }
+
+    // Event Listeners
+    document.getElementById('jump-btn').addEventListener('click', () => focusQuestion(parseInt(jumpInput.value, 10)));
+    jumpInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') focusQuestion(parseInt(jumpInput.value, 10)); });
+
+    document.getElementById('random-btn').addEventListener('click', () => {
+      const pool = getFilteredIndices();
+      const source = pool.length > 0 ? pool : QUESTION_INDEX;
+      const pickIdx = Math.floor(Math.random() * source.length);
+      const pick = source[pickIdx];
+      currentPage = Math.floor(pickIdx / pageSize) + 1;
+      expandedSet.add(pick.id);
+      render();
+      requestAnimationFrame(() => {
+        const card = document.querySelector(`.q-card[data-qid="${pick.id}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-pulse');
+          setTimeout(() => card.classList.remove('highlight-pulse'), 2400);
+          showToast(`Mock Pick: #${pick.id} ${pick.title}`);
+        }
+      });
+    });
+
+    // Syllabus Modal
+    document.getElementById('syllabus-btn').addEventListener('click', () => {
+      syllabusTbody.innerHTML = MODULES.map((m, idx) => {
+        const startId = idx * 500 + 1;
+        const endId = (idx + 1) * 500;
+        let done = 0;
+        for (let qid = startId; qid <= endId; qid++) if (solvedSet.has(qid)) done++;
+        const pct = Math.round((done / 500) * 100);
+        return `
+          <tr class="syllabus-row" onclick="filterModule(${idx})">
+            <td><strong>${m.name}</strong></td>
+            <td style="font-family: var(--font-mono); white-space: nowrap;">#${startId} &ndash; #${endId}</td>
+            <td style="color: var(--text-muted);">${m.focus}</td>
+            <td>
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-weight: 700;">
+                <span>${done} / 500</span><span>${pct}%</span>
+              </div>
+              <div class="mini-bar"><div class="mini-bar-fill" style="width: ${pct}%"></div></div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      syllabusModal.classList.add('open');
+    });
+
+    window.filterModule = function(idx) {
+      syllabusModal.classList.remove('open');
+      filters.module = String(idx);
+      moduleSelect.value = String(idx);
+      currentPage = 1;
+      render();
+    };
+
+    const closeSyllabus = () => syllabusModal.classList.remove('open');
+    document.getElementById('close-syllabus').addEventListener('click', closeSyllabus);
+    document.getElementById('close-syllabus-2').addEventListener('click', closeSyllabus);
+    syllabusModal.addEventListener('click', (e) => { if (e.target === syllabusModal) closeSyllabus(); });
+
+    // Export / Import JSON
+    document.getElementById('export-btn').addEventListener('click', () => {
+      const payload = JSON.stringify({
+        totalQuestions: TOTAL_QUESTIONS,
+        solved: [...solvedSet],
+        bookmarked: [...bookmarkSet],
+        exportedAt: new Date().toISOString()
+      }, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'java17-dsa-5000-progress.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Exported java17-dsa-5000-progress.json');
+    });
+
+    const importFile = document.getElementById('import-file');
+    document.getElementById('import-btn').addEventListener('click', () => importFile.click());
+    importFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (Array.isArray(data.solved)) {
+            solvedSet = new Set(data.solved);
+            localStorage.setItem(SOLVED_KEY, JSON.stringify([...solvedSet]));
+          }
+          if (Array.isArray(data.bookmarked)) {
+            bookmarkSet = new Set(data.bookmarked);
+            localStorage.setItem(BOOKMARK_KEY, JSON.stringify([...bookmarkSet]));
+          }
+          render();
+          showToast('Imported 5,000-question progress!');
+        } catch {
+          showToast('Invalid JSON backup file');
+        }
+      };
+      reader.readAsText(file);
+      importFile.value = '';
+    });
+
+    // Reset Modal
+    document.getElementById('reset-btn').addEventListener('click', () => resetModal.classList.add('open'));
+    const closeReset = () => resetModal.classList.remove('open');
+    document.getElementById('close-reset').addEventListener('click', closeReset);
+    document.getElementById('cancel-reset').addEventListener('click', closeReset);
+    document.getElementById('confirm-reset').addEventListener('click', () => {
+      solvedSet.clear();
+      bookmarkSet.clear();
+      localStorage.removeItem(SOLVED_KEY);
+      localStorage.removeItem(BOOKMARK_KEY);
+      closeReset();
+      render();
+      showToast('Progress reset to 0 / 5,000');
+    });
+
+    // Debounced Search & Filter Controls
+    let searchTimer = null;
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimer);
+      const val = e.target.value;
+      clearSearchBtn.classList.toggle('visible', val.length > 0);
+      searchTimer = setTimeout(() => {
+        filters.search = val;
+        currentPage = 1;
+        render();
+      }, 120);
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      filters.search = '';
+      clearSearchBtn.classList.remove('visible');
+      currentPage = 1;
+      render();
+    });
+
+    moduleSelect.addEventListener('change', (e) => { filters.module = e.target.value; currentPage = 1; render(); });
+    diffSelect.addEventListener('change', (e) => { filters.difficulty = e.target.value; currentPage = 1; render(); });
+    featureSelect.addEventListener('change', (e) => { filters.feature = e.target.value; currentPage = 1; render(); });
+    pageSizeSelect.addEventListener('change', (e) => { pageSize = parseInt(e.target.value, 10); currentPage = 1; render(); });
+
+    statusTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        statusTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filters.status = tab.dataset.status;
+        currentPage = 1;
+        render();
+      });
+    });
+
+    function resetFilters(shouldRender = true) {
+      filters = { search: '', module: 'all', difficulty: 'all', feature: 'all', status: 'all' };
+      searchInput.value = '';
+      clearSearchBtn.classList.remove('visible');
+      moduleSelect.value = 'all';
+      diffSelect.value = 'all';
+      featureSelect.value = 'all';
+      statusTabs.forEach(t => t.classList.toggle('active', t.dataset.status === 'all'));
+      currentPage = 1;
+      if (shouldRender) render();
+    }
+
+    document.getElementById('clear-filters-btn').addEventListener('click', () => resetFilters(true));
+
+    // Theme Switcher
+    document.getElementById('theme-btn').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+    });
+
+    window.onload = function() {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+      render();
+    };
+  </script>
+</body>
+</html>
