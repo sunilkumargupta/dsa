@@ -1,0 +1,1926 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java 17+ Interview Master — 5,000 Fine Java Questions &amp; Interview Portal</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #111827;
+      --surface-elevated: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --accent: #f97316;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --purple: #a855f7;
+      --code-bg: #060a14;
+    }
+
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-elevated: #f8fafc;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #ea580c;
+      --green: #16a34a;
+      --yellow: #ca8a04;
+      --red: #dc2626;
+      --purple: #7e22ce;
+      --code-bg: #0f172a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 64px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.18rem;
+      color: var(--primary);
+    }
+
+    .pill-lts {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      background: var(--surface-elevated);
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+    button:hover { border-color: var(--primary); }
+    button.btn-primary {
+      background: var(--primary);
+      color: #090d16;
+      border-color: var(--primary);
+    }
+    button.btn-primary:hover { background: var(--primary-dark); color: #fff; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .container {
+      max-width: 1280px;
+      margin: 22px auto;
+      padding: 0 18px;
+    }
+
+    .dashboard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+    }
+
+    .dash-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface-elevated);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--green));
+      transition: width 0.25s ease;
+    }
+
+    /* 6-Column Responsive Filter Bar */
+    .filters-bar {
+      display: grid;
+      grid-template-columns: 2fr 1.25fr 1fr 1.15fr 0.95fr 0.9fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .filters-bar { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .filters-bar { grid-template-columns: 1fr; }
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+
+    .pager-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .pager-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .q-card.highlight {
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.22);
+    }
+
+    .q-head {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-head:hover { background: var(--surface-elevated); }
+
+    .q-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .q-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--primary);
+      min-width: 58px;
+    }
+
+    .q-title {
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .b-mod { background: rgba(56, 189, 248, 0.14); color: var(--primary); }
+    .b-feat { background: rgba(168, 85, 247, 0.16); color: var(--purple); }
+    .b-easy { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .b-med { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+    .b-hard { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+
+    .q-body {
+      display: none;
+      padding: 16px 20px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-elevated);
+    }
+    .q-body.open { display: block; }
+
+    .meta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .meta-row strong { color: var(--text); }
+
+    .prompt-box {
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .problem-desc {
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+      color: var(--text);
+      line-height: 1.62;
+    }
+
+    .takeaway-pill {
+      background: rgba(56, 189, 248, 0.09);
+      border-left: 3px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.86rem;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .code-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: #e2e8f0;
+      padding: 15px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.84rem;
+      line-height: 1.48;
+      overflow-x: auto;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #475569;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .check-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      cursor: pointer;
+    }
+    .check-wrap input { width: auto; }
+
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .modal-bg.active { display: flex; }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 920px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 22px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.86rem;
+    }
+    th, td {
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th { background: var(--surface-elevated); }
+    tr.mod-row { cursor: pointer; }
+    tr.mod-row:hover { background: var(--surface-elevated); }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--surface);
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 120;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="brand">
+        <span>Java 17+ Interview Master &mdash; 5,000 Questions</span>
+        <span class="pill-lts">JAVA 17 / 21 LTS</span>
+      </div>
+      <div class="nav-actions">
+        <button id="syllabusBtn">Module Syllabus (10 &times; 500)</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" />
+        <button id="themeBtn">Theme</button>
+        <button class="btn-primary" id="randomBtn">Random Mock Question</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="dashboard">
+      <div class="dash-top">
+        <div>
+          <h1 style="font-size:1.1rem;">5,000-Question Java 17+ Interview Mastery Tracker</h1>
+          <p id="statsLabel" style="font-size:0.86rem;color:var(--text-muted);margin-top:2px;">
+            0 / 5,000 Mastered (0.00%) &bull; Bookmarked: 0
+          </p>
+        </div>
+        <button id="resetBtn">Reset Progress</button>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </section>
+
+    <section class="filters-bar">
+      <input type="text" id="searchInput" placeholder="Search #ID, topic, JVM, GC, Streams, Concurrency, or Java 17 feature..." />
+      <select id="moduleFilter"><option value="ALL">All 10 Modules (5,000 Qs)</option></select>
+      <select id="difficultyFilter">
+        <option value="ALL">All Difficulties</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+      <select id="featureFilter"><option value="ALL">All Java 17+ Features</option></select>
+      <select id="statusFilter">
+        <option value="ALL">All Status</option>
+        <option value="DONE">Mastered</option>
+        <option value="TODO">Unmastered</option>
+        <option value="BOOKMARK">Bookmarked</option>
+      </select>
+      <input type="number" id="jumpInput" min="1" max="5000" placeholder="Jump #1..5000" />
+    </section>
+
+    <div class="pager-bar">
+      <div id="resultSummary">Showing 1&ndash;25 of 5,000 questions</div>
+      <div class="pager-controls">
+        <select id="pageSizeSelect" style="width:auto;padding:6px 10px;">
+          <option value="25">25 / page</option>
+          <option value="50">50 / page</option>
+          <option value="100">100 / page</option>
+        </select>
+        <button id="firstPageBtn">&laquo; First</button>
+        <button id="prevPageBtn">&lsaquo; Prev</button>
+        <span id="pageIndicator" style="padding:0 6px;font-weight:600;color:var(--text);">Page 1 / 200</span>
+        <button id="nextPageBtn">Next &rsaquo;</button>
+        <button id="lastPageBtn">Last &raquo;</button>
+      </div>
+    </div>
+
+    <div class="q-list" id="questionList"></div>
+  </main>
+
+  <!-- Module Syllabus Modal (10 x 500 = 5,000) -->
+  <div class="modal-bg" id="syllabusModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 style="font-size:1.15rem;">10 Modules &times; 500 Questions = 5,000 Java 17+ Interview Questions</h2>
+        <button id="closeModalBtn">&times;</button>
+      </div>
+      <p style="font-size:0.84rem;color:var(--text-muted);margin-top:6px;">
+        Click any module row to filter its 500 dedicated Java 17+ interview questions.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Module</th>
+            <th>ID Range</th>
+            <th>Primary Java 17+ Idioms</th>
+            <th>Mastered</th>
+          </tr>
+        </thead>
+        <tbody id="syllabusBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Custom Reset Confirmation Modal (No native confirm/alert) -->
+  <div class="modal-bg" id="resetModal">
+    <div class="modal-box" style="max-width:440px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 style="font-size:1.05rem;">Reset All 5,000-Question Progress?</h2>
+        <button id="closeResetBtn">&times;</button>
+      </div>
+      <p style="font-size:0.88rem;color:var(--text-muted);margin:12px 0 18px;">
+        This clears all mastered checkmarks and bookmarks stored in your browser. Export your JSON backup first if you want to keep a copy.
+      </p>
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button id="cancelResetBtn">Cancel</button>
+        <button class="btn-primary" id="confirmResetBtn" style="background:var(--red);border-color:var(--red);color:#fff;">Reset Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg"></div>
+
+  <script>
+    // 10 Core Java Domains (500 Questions per Module = 5,000 Total)
+    const MODULES = [
+      { id: 1, name: "OOP, Type System & Java 17/21 Language Features", feature: "Records & Sealed Types" },
+      { id: 2, name: "JVM Internals, ClassLoading & Bytecode Execution", feature: "JIT C2 & invokedynamic" },
+      { id: 3, name: "Memory Management & Garbage Collectors (G1, ZGC, Shenandoah)", feature: "G1GC, ZGC & Cleaner API" },
+      { id: 4, name: "Collections Framework Internals & Hashing Contracts", feature: "HashMap Treeification & CHM" },
+      { id: 5, name: "Java Memory Model (JMM), Threads & Synchronization", feature: "volatile, StampedLock & LongAdder" },
+      { id: 6, name: "Modern Concurrency: CompletableFuture, Executors & Virtual Threads", feature: "Project Loom & ForkJoinPool" },
+      { id: 7, name: "Streams API, Lambdas & Functional Programming", feature: "mapMulti, Collectors.teeing & Optional" },
+      { id: 8, name: "Strings, I/O, NIO.2 & Serialization Security", feature: "Compact Strings, Text Blocks & ObjectInputFilter" },
+      { id: 9, name: "Exception Handling, Generics, Reflection & VarHandle", feature: "PECS Variance & VarHandle Ordering" },
+      { id: 10, name: "Enterprise Java, JFR Profiling & Production Patterns", feature: "JDK Flight Recorder, HttpClient & Clock DI" }
+    ];
+
+    // 50 Distinct Core Java Engineering Topics (5 Deep Topics per Module)
+    // Each topic has its own 1-to-1 matched Technical Answer, Interviewer Takeaway, and Runnable Java 17+ Snippet
+    const CORE_TOPICS = [
+      // ==================== M1 (#1-#500): OOP, Type System & Java 17/21 Language Features ====================
+      {
+        mod: 1, diff: "Easy", runtime: "Compile-Time & Heap", scope: "Records (JEP 395)",
+        title: "Compact Constructors, Shallow Immutability, and Defensive Copying in Java 17 Records",
+        answer: "Java 17 Records are implicitly final classes extending java.lang.Record with private final components, generated canonical constructors, value-based equals/hashCode/toString, and component accessors. A compact constructor omits the formal parameter list and executes validation and defensive normalization before the compiler implicitly assigns the final fields.",
+        takeaway: "Wrap mutable collections with List.copyOf() or Set.copyOf() inside compact constructors so external callers cannot mutate internal record state.",
+        code: `import java.util.List;
+
+public record OrderSnapshot(String orderId, List<String> items, long amountCents) {
+    public OrderSnapshot {
+        if (orderId == null || orderId.isBlank()) {
+            throw new IllegalArgumentException("orderId is required");
+        }
+        if (amountCents < 0) {
+            throw new IllegalArgumentException("amountCents cannot be negative");
+        }
+        items = List.copyOf(items);
+    }
+}`
+      },
+      {
+        mod: 1, diff: "Medium", runtime: "Compile-Time & Runtime", scope: "Sealed Types (JEP 409)",
+        title: "Modeling Exhaustive Algebraic Domain States with Sealed Interfaces & Pattern Matching",
+        answer: "Sealed classes and interfaces restrict which subtypes may extend or implement them via the permits clause. Every permitted subtype must declare itself final, sealed, or non-sealed, enabling closed algebraic data types that reject unauthorized external subclassing across packages.",
+        takeaway: "Combine sealed interfaces with nested records to model closed domain results cleanly inside a single source file.",
+        code: `public sealed interface PaymentResult permits PaymentResult.Approved, PaymentResult.Declined, PaymentResult.Pending {
+    record Approved(String authCode, long settledCents) implements PaymentResult {}
+    record Declined(String reasonCode) implements PaymentResult {}
+    record Pending(String retryToken) implements PaymentResult {}
+
+    static String describe(PaymentResult res) {
+        if (res instanceof Approved a) return "Settled: " + a.authCode();
+        if (res instanceof Declined d) return "Rejected: " + d.reasonCode();
+        if (res instanceof Pending p)  return "Awaiting: " + p.retryToken();
+        throw new IllegalStateException("Unreachable");
+    }
+}`
+      },
+      {
+        mod: 1, diff: "Easy", runtime: "O(1) Hash Lookup", scope: "Object Contract",
+        title: "Maintaining equals() and hashCode() Invariants for Immutable Value Keys",
+        answer: "If a.equals(b) is true, a.hashCode() must equal b.hashCode(). Mutating a field participating in hashCode() after inserting an object into a HashMap or HashSet causes subsequent lookups to hash to a different bucket, permanently orphaning the entry.",
+        takeaway: "Never include mutable entity fields in hashCode(); compute Objects.hash() exclusively over immutable business fields.",
+        code: `import java.util.Objects;
+
+public final class TenantKey {
+    private final String tenantId;
+    private final String region;
+
+    public TenantKey(String tenantId, String region) {
+        this.tenantId = Objects.requireNonNull(tenantId);
+        this.region = Objects.requireNonNull(region);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof TenantKey other)
+            && tenantId.equals(other.tenantId)
+            && region.equals(other.region);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tenantId, region);
+    }
+}`
+      },
+      {
+        mod: 1, diff: "Medium", runtime: "O(1) Jump Table", scope: "Switch Expressions (JEP 361)",
+        title: "Arrow-Syntax Switch Expressions, yield Keyword, and Compile-Time Enum Exhaustiveness",
+        answer: "Switch expressions evaluate to a value, eliminate accidental fall-through bugs via arrow labels (->), and enforce compile-time exhaustiveness on enums without needing a defensive default branch. Multi-statement blocks inside a switch expression return values using yield.",
+        takeaway: "Prefer switch expressions over switch statements whenever computing a value so the compiler flags missing enum constants at build time.",
+        code: `public enum Tier { STANDARD, GOLD, PLATINUM }
+
+public final class FeeCalculator {
+    public static int computeBps(Tier tier, boolean crossBorder) {
+        return switch (tier) {
+            case STANDARD -> crossBorder ? 250 : 120;
+            case GOLD     -> crossBorder ? 150 : 60;
+            case PLATINUM -> {
+                int base = crossBorder ? 75 : 15;
+                yield Math.max(10, base);
+            }
+        };
+    }
+}`
+      },
+      {
+        mod: 1, diff: "Hard", runtime: "vtable / itable Dispatch", scope: "Polymorphism & Default Methods",
+        title: "Dynamic Virtual Dispatch vs Static Binding and Diamond Default Method Resolution",
+        answer: "Non-private instance methods dispatch dynamically via vtable/itable lookup at runtime based on the actual object class, whereas static, private, and final methods bind statically at compile time. Diamond default method collisions require explicit InterfaceName.super.method() disambiguation.",
+        takeaway: "Never invoke overridable instance methods inside a superclass constructor, as subclass overrides run before subclass fields initialize.",
+        code: `interface Auditable { default String tag() { return "AUDIT"; } }
+interface Traceable { default String tag() { return "TRACE"; } }
+
+public final class ServiceNode implements Auditable, Traceable {
+    @Override
+    public String tag() {
+        return Auditable.super.tag() + "+" + Traceable.super.tag();
+    }
+}`
+      },
+
+      // ==================== M2 (#501-#1000): JVM Internals, ClassLoading & Bytecode Execution ====================
+      {
+        mod: 2, diff: "Medium", runtime: "Class Loading Phase", scope: "ClassLoaders",
+        title: "ClassLoader Parent Delegation Model and Runtime Type Identity Isolation",
+        answer: "Application ClassLoader delegates to Platform ClassLoader, which delegates to the native Bootstrap ClassLoader before loading classes itself. Two classes with identical binary names loaded by two separate ClassLoader instances are treated as incompatible runtime types by the JVM.",
+        takeaway: "Parent delegation prevents untrusted classpath JARs from spoofing core java.lang.* classes.",
+        code: `public final class ClassLoaderInspector {
+    public static String hierarchyOf(Class<?> type) {
+        var sb = new StringBuilder();
+        ClassLoader cl = type.getClassLoader();
+        while (cl != null) {
+            sb.append(cl.getName()).append(" -> ");
+            cl = cl.getParent();
+        }
+        return sb.append("BootstrapClassLoader").toString();
+    }
+}`
+      },
+      {
+        mod: 2, diff: "Hard", runtime: "C2 JIT Compilation", scope: "JIT Escape Analysis",
+        title: "JIT C1/C2 Tiered Compilation, Escape Analysis, Scalar Replacement, and Lock Elision",
+        answer: "HotSpot profiles bytecode in the interpreter and C1 compiler before compiling hot methods with C2. If Escape Analysis proves an object never escapes a method or thread, C2 decomposes its fields into CPU registers (Scalar Replacement) and elides uncontended locks.",
+        takeaway: "Short-lived records inside hot loops frequently incur zero heap allocation overhead after C2 optimization.",
+        code: `public final class EscapeAnalysisDemo {
+    private record Point(int x, int y) {}
+
+    public static long hotSum(int iterations) {
+        long total = 0;
+        for (int i = 0; i < iterations; i++) {
+            var p = new Point(i, i + 1);
+            total += p.x() + p.y();
+        }
+        return total;
+    }
+}`
+      },
+      {
+        mod: 2, diff: "Medium", runtime: "Native Memory", scope: "Metaspace",
+        title: "PermGen Removal, Native Metaspace Architecture, and Compressed Class Space",
+        answer: "Since Java 8, PermGen was replaced by Metaspace in native OS memory. Class metadata lives in Metaspace (optionally bounded via -XX:MaxMetaspaceSize), while static fields and interned Strings reside on the Java Heap.",
+        takeaway: "OutOfMemoryError: Metaspace almost always indicates a ClassLoader leak during hot redeployment or unbounded dynamic proxy generation.",
+        code: `import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryType;
+
+public final class MetaspaceStats {
+    public static long usedMetaspaceBytes() {
+        return ManagementFactory.getMemoryPoolMXBeans().stream()
+            .filter(p -> p.getType() == MemoryType.NON_HEAP && p.getName().contains("Metaspace"))
+            .mapToLong(p -> p.getUsage().getUsed())
+            .sum();
+    }
+}`
+      },
+      {
+        mod: 2, diff: "Easy", runtime: "Thread-Safe <clinit>", scope: "Linking & Initialization",
+        title: "Class Lifecycle Phases: Loading, Verification, Preparation, Resolution, and <clinit>",
+        answer: "During Preparation, static fields allocate with default zero values (except compile-time static final constants, which are inlined). Static initializers (<clinit>) run lazily on first active use under a JVM initialization lock.",
+        takeaway: "The Initialization-on-Demand Holder idiom uses <clinit> synchronization for zero-overhead lazy singletons.",
+        code: `public final class LazyRegistry {
+    private LazyRegistry() {}
+
+    private static final class Holder {
+        static final LazyRegistry INSTANCE = new LazyRegistry();
+    }
+
+    public static LazyRegistry getInstance() {
+        return Holder.INSTANCE;
+    }
+}`
+      },
+      {
+        mod: 2, diff: "Hard", runtime: "Bootstrap CallSite", scope: "invokedynamic",
+        title: "How invokedynamic Powers Lambdas, StringConcatFactory, and Dynamic Call Sites",
+        answer: "invokedynamic defers call-site linkage to a bootstrap method at runtime. Java lambdas compile into private synthetic methods linked via LambdaMetafactory without generating bulky anonymous inner .class files, and string concatenation uses StringConcatFactory.",
+        takeaway: "Stateless lambdas reuse a cached singleton target, whereas capturing lambdas allocate a lightweight instance per capture.",
+        code: `import java.util.function.IntUnaryOperator;
+
+public final class LambdaAllocationNote {
+    public static IntUnaryOperator stateless() { return x -> x * 2; }
+    public static IntUnaryOperator capturing(int factor) { return x -> x * factor; }
+}`
+      },
+
+      // ==================== M3 (#1001-#1500): Memory Management & Garbage Collectors ====================
+      {
+        mod: 3, diff: "Medium", runtime: "Region-Based GC", scope: "G1GC Internals",
+        title: "G1 Garbage Collector Region Layout, Remembered Sets (RSets), and Mixed GCs",
+        answer: "G1 divides the heap into equal-sized regions (1MB-32MB) dynamically assigned as Eden, Survivor, Old, or Humongous (>50% region size). Remembered Sets track cross-region references so young collections scan only relevant cards to honor -XX:MaxGCPauseMillis.",
+        takeaway: "Arrays exceeding 50% of a G1 region trigger Humongous allocations directly in Old Gen; increase -XX:G1HeapRegionSize if frequent.",
+        code: `public final class HeapDiagnostics {
+    public static String summary() {
+        var rt = Runtime.getRuntime();
+        long maxMb = rt.maxMemory() / (1024 * 1024);
+        long freeMb = rt.freeMemory() / (1024 * 1024);
+        return "MaxHeap=%dMB, FreeHeap=%dMB".formatted(maxMb, freeMb);
+    }
+}`
+      },
+      {
+        mod: 3, diff: "Hard", runtime: "Sub-ms Pause GC", scope: "ZGC (JEP 377/439)",
+        title: "ZGC Colored Pointers, Load Barriers, and Sub-Millisecond Concurrent Relocation",
+        answer: "ZGC achieves sub-millisecond pause times independent of heap size (8MB to 16TB) by performing marking, relocation, and reference remapping concurrently with application threads via colored 64-bit pointers and JIT load barriers.",
+        takeaway: "Use -XX:+UseZGC in Java 17+ when p99/p99.9 latency SLAs outweigh raw batch throughput.",
+        code: `import java.lang.management.ManagementFactory;
+
+public final class ZgcReadiness {
+    public static boolean isLowPauseConfigured() {
+        return ManagementFactory.getGarbageCollectorMXBeans().stream()
+            .anyMatch(gc -> gc.getName().contains("ZGC"));
+    }
+}`
+      },
+      {
+        mod: 3, diff: "Medium", runtime: "Post-Mortem Cleanup", scope: "Cleaner API (JEP 421)",
+        title: "Strong, Soft, Weak, and Phantom References with java.lang.ref.Cleaner (JEP 421)",
+        answer: "Strong references prevent GC; SoftReferences clear only under memory pressure; WeakReferences clear eagerly once no strong references exist (WeakHashMap); PhantomReferences schedule deterministic native cleanup via java.lang.ref.Cleaner.",
+        takeaway: "Never override finalize() (deprecated for removal); register cleanup actions via java.lang.ref.Cleaner.",
+        code: `import java.lang.ref.Cleaner;
+
+public final class NativeBufferHandle implements AutoCloseable {
+    private static final Cleaner CLEANER = Cleaner.create();
+    private final Cleaner.Cleanable cleanable;
+
+    public NativeBufferHandle(long address) {
+        this.cleanable = CLEANER.register(this, () -> releaseNative(address));
+    }
+
+    private static void releaseNative(long addr) { /* free native memory */ }
+
+    @Override
+    public void close() { cleanable.clean(); }
+}`
+      },
+      {
+        mod: 3, diff: "Easy", runtime: "Pooled Thread Hygiene", scope: "Memory Leaks",
+        title: "Preventing ThreadLocal Memory Leaks in Executor Thread Pools",
+        answer: "Memory leaks occur when logically dead objects remain strongly reachable from GC roots—such as pooled worker threads retaining ThreadLocal values, unclosed streams, or non-static inner classes capturing outer references.",
+        takeaway: "Always call ThreadLocal.remove() inside a finally block on pooled threads.",
+        code: `public final class RequestContextHolder {
+    private static final ThreadLocal<String> CORRELATION_ID = new ThreadLocal<>();
+
+    public static void runWithId(String id, Runnable task) {
+        CORRELATION_ID.set(id);
+        try {
+            task.run();
+        } finally {
+            CORRELATION_ID.remove();
+        }
+    }
+}`
+      },
+      {
+        mod: 3, diff: "Hard", runtime: "STW Coordination", scope: "Safepoints & TTSP",
+        title: "JVM Safepoints, Time-To-Safepoint (TTSP), and Counted Loop Strip Mining",
+        answer: "A Safepoint is an execution point where all mutator threads pause with consistent object reference maps for stop-the-world operations. Tight int-indexed counted loops omit safepoint polls by default, delaying all other threads waiting to reach a safepoint.",
+        takeaway: "High TTSP spikes in GC logs often trace back to tight int-indexed memory copy loops lacking safepoint polls.",
+        code: `public final class SafepointAwareness {
+    public static long chunkedProcess(int[] data) {
+        long acc = 0;
+        for (long i = 0; i < data.length; i++) {
+            acc += data[(int) i];
+        }
+        return acc;
+    }
+}`
+      },
+
+      // ==================== M4 (#1501-#2000): Collections Framework Internals & Hashing Contracts ====================
+      {
+        mod: 4, diff: "Medium", runtime: "O(1) Avg / O(log n) Tree", scope: "HashMap Internals",
+        title: "HashMap Hash Spreading, Power-of-Two Masking, and Treeification Thresholds (8 / 64 / 6)",
+        answer: "HashMap spreads upper hash bits via (h = key.hashCode()) ^ (h >>> 16) and computes bucket index with (n - 1) & hash. When a bucket reaches TREEIFY_THRESHOLD (8) AND table capacity is >= MIN_TREEIFY_CAPACITY (64), it converts into a Red-Black TreeNode bin, reverting at UNTREEIFY_THRESHOLD (6).",
+        takeaway: "Keys implementing Comparable break hash ties cleanly inside TreeNodes; otherwise HashMap uses System.identityHashCode.",
+        code: `public final class HashSpreadInspector {
+    public static int spreadHash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    }
+
+    public static int bucketIndex(Object key, int tableLengthPowerOfTwo) {
+        return (tableLengthPowerOfTwo - 1) & spreadHash(key);
+    }
+}`
+      },
+      {
+        mod: 4, diff: "Hard", runtime: "Lock-Free Reads / Bin Lock", scope: "ConcurrentHashMap",
+        title: "ConcurrentHashMap Java 8+ CAS + Per-Bin Synchronized Locking vs Java 7 Segments",
+        answer: "Modern ConcurrentHashMap eliminated fixed Segment arrays in favor of node-level concurrency: empty bins insert lock-free via CAS, while collisions lock only the head node of that specific bucket using synchronized. Reads are lock-free via volatile Node fields, and size() uses striped CounterCells.",
+        takeaway: "Never run a recursive or blocking call that mutates the same ConcurrentHashMap inside computeIfAbsent(), which can deadlock on the bin lock.",
+        code: `import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.LongAdder;
+
+public final class ConcurrentMetrics {
+    private final ConcurrentHashMap<String, LongAdder> counters = new ConcurrentHashMap<>();
+
+    public void recordHit(String endpoint) {
+        counters.computeIfAbsent(endpoint, k -> new LongAdder()).increment();
+    }
+
+    public long totalHits(String endpoint) {
+        var adder = counters.get(endpoint);
+        return adder == null ? 0L : adder.sum();
+    }
+}`
+      },
+      {
+        mod: 4, diff: "Easy", runtime: "Compact Immutable Structs", scope: "Unmodifiable Collections",
+        title: "List.of() / Map.of() Structural Immutability vs Collections.unmodifiableList()",
+        answer: "Collections.unmodifiableList(list) is a thin read-only wrapper where mutations to the underlying list still reflect through the wrapper and nulls are allowed. Java 9+ List.of(), Set.of(), and Map.of() allocate compact, truly immutable, null-hostile instances.",
+        takeaway: "Use List.copyOf(source) when exposing internal lists from getters or records.",
+        code: `import java.util.List;
+import java.util.Map;
+
+public final class ImmutableFactories {
+    public static Map<String, List<Integer>> defaultRouting() {
+        return Map.of(
+            "PRIMARY", List.of(10, 20, 30),
+            "BACKUP",  List.of(40, 50)
+        );
+    }
+}`
+      },
+      {
+        mod: 4, diff: "Medium", runtime: "O(1) Amortized Circular Array", scope: "ArrayDeque vs LinkedList",
+        title: "Memory Locality and Throughput Advantages of ArrayDeque Over LinkedList",
+        answer: "ArrayDeque is backed by a circular resizable Object[] array with head and tail indices. Unlike LinkedList, it avoids allocating a 24-byte Node wrapper per element, eliminates pointer-chasing CPU cache misses, and achieves amortized O(1) push/pop/offer/poll.",
+        takeaway: "Prefer ArrayDeque over legacy synchronized java.util.Stack and LinkedList for LIFO stacks and FIFO queues.",
+        code: `import java.util.ArrayDeque;
+import java.util.Deque;
+
+public final class FastDequeStack<T> {
+    private final Deque<T> deque = new ArrayDeque<>();
+
+    public void push(T item) { deque.addFirst(item); }
+    public T pop()           { return deque.removeFirst(); }
+    public T peek()          { return deque.peekFirst(); }
+}`
+      },
+      {
+        mod: 4, diff: "Medium", runtime: "O(n) Single-Pass", scope: "Iterator Contracts",
+        title: "Fail-Fast modCount Checks vs Weakly Consistent Iterators and removeIf()",
+        answer: "Standard collections maintain an integer modCount; iterators snapshot expectedModCount and throw ConcurrentModificationException on structural modification outside iterator.remove(). Concurrent collections provide weakly consistent iterators that never throw CME.",
+        takeaway: "Use collection.removeIf(predicate) for single-pass O(n) conditional removal on ArrayList instead of removing inside a for-each loop.",
+        code: `import java.util.ArrayList;
+import java.util.List;
+
+public final class SafeRemoval {
+    public static List<String> stripBlanks(List<String> input) {
+        var mutable = new ArrayList<>(input);
+        mutable.removeIf(s -> s == null || s.isBlank());
+        return List.copyOf(mutable);
+    }
+}`
+      },
+
+      // ==================== M5 (#2001-#2500): Java Memory Model (JMM), Threads & Synchronization ====================
+      {
+        mod: 5, diff: "Hard", runtime: "Memory Barriers", scope: "JMM Happens-Before",
+        title: "Java Memory Model Happens-Before Guarantees, volatile Visibility, and StoreLoad Barriers",
+        answer: "The JMM defines Happens-Before edges (program order, monitor unlock->lock, volatile write->read, Thread.start, Thread.join, final field freeze) that forbid CPU/compiler instruction reordering across boundaries. A volatile write flushes store buffers and prevents reordering with prior writes.",
+        takeaway: "volatile guarantees visibility and ordering, NOT compound atomicity (count++); use AtomicLong or LongAdder for increments.",
+        code: `public final class DoubleCheckedSingleton {
+    private static volatile DoubleCheckedSingleton instance;
+
+    private DoubleCheckedSingleton() {}
+
+    public static DoubleCheckedSingleton get() {
+        var local = instance;
+        if (local == null) {
+            synchronized (DoubleCheckedSingleton.class) {
+                local = instance;
+                if (local == null) {
+                    instance = local = new DoubleCheckedSingleton();
+                }
+            }
+        }
+        return local;
+    }
+}`
+      },
+      {
+        mod: 5, diff: "Hard", runtime: "Optimistic Stamp", scope: "StampedLock",
+        title: "Optimistic Reading with StampedLock vs ReentrantReadWriteLock",
+        answer: "StampedLock supports optimistic reads via tryOptimisticRead(), returning a stamp without acquiring any lock or dirtying cache lines. After reading fields into local variables, validate(stamp) checks whether a write intervened; if false, fall back to readLock().",
+        takeaway: "StampedLock is NOT reentrant—never re-acquire it on the same thread.",
+        code: `import java.util.concurrent.locks.StampedLock;
+
+public final class CoordinateState {
+    private final StampedLock lock = new StampedLock();
+    private double x, y;
+
+    public void move(double dx, double dy) {
+        long stamp = lock.writeLock();
+        try { x += dx; y += dy; }
+        finally { lock.unlockWrite(stamp); }
+    }
+
+    public double distanceFromOrigin() {
+        long stamp = lock.tryOptimisticRead();
+        double cx = x, cy = y;
+        if (!lock.validate(stamp)) {
+            stamp = lock.readLock();
+            try { cx = x; cy = y; }
+            finally { lock.unlockRead(stamp); }
+        }
+        return Math.hypot(cx, cy);
+    }
+}`
+      },
+      {
+        mod: 5, diff: "Medium", runtime: "Deadlock-Free Ordering", scope: "Deadlock & Livelock",
+        title: "Four Coffman Conditions, Global Lock Ordering, and Timed tryLock Recovery",
+        answer: "Deadlock requires Mutual Exclusion, Hold-and-Wait, No Preemption, and Circular Wait. Breaking Circular Wait via deterministic global lock ordering (sorting resources by canonical ID) mathematically prevents lock-cycle deadlocks.",
+        takeaway: "Always acquire multiple locks in strict ascending resource ID order.",
+        code: `import java.util.concurrent.locks.ReentrantLock;
+
+public final class OrderedTransfer {
+    public record Account(long id, ReentrantLock lock) {}
+
+    public static void transfer(Account a, Account b, Runnable action) {
+        Account first = a.id() < b.id() ? a : b;
+        Account second = a.id() < b.id() ? b : a;
+        first.lock().lock();
+        try {
+            second.lock().lock();
+            try { action.run(); }
+            finally { second.lock().unlock(); }
+        } finally {
+            first.lock().unlock();
+        }
+    }
+}`
+      },
+      {
+        mod: 5, diff: "Easy", runtime: "Monitor Condition Loop", scope: "wait / notify",
+        title: "Why wait() Must Always Be Invoked Inside a while Loop (Spurious Wakeups)",
+        answer: "OS schedulers can trigger spurious wakeups, and notifyAll() wakes all waiting threads even when only one thread can consume the newly available condition. Re-checking the predicate in a while (!condition) loop guarantees safety.",
+        takeaway: "Use ReentrantLock + separate Condition queues (notFull / notEmpty) in multi-producer bounded buffers.",
+        code: `public final class BoundedSlot<T> {
+    private T item;
+
+    public synchronized void put(T value) throws InterruptedException {
+        while (item != null) wait();
+        item = value;
+        notifyAll();
+    }
+
+    public synchronized T take() throws InterruptedException {
+        while (item == null) wait();
+        T res = item;
+        item = null;
+        notifyAll();
+        return res;
+    }
+}`
+      },
+      {
+        mod: 5, diff: "Hard", runtime: "64-Byte Cache Line", scope: "False Sharing & LongAdder",
+        title: "CPU L1/L2 Cache Line False Sharing and LongAdder Striped64 Mitigation",
+        answer: "Modern CPUs invalidate coherence units in 64-byte cache lines. When two threads frequently update independent volatile/atomic variables sharing the same 64-byte cache line, MESI cache-line ping-pong degrades throughput dramatically.",
+        takeaway: "Use LongAdder (which stripes updates across padded Striped64 cells) instead of AtomicLong under heavy write contention.",
+        code: `import java.util.concurrent.atomic.LongAdder;
+
+public final class ContentionFreeCounter {
+    private final LongAdder adder = new LongAdder();
+
+    public void add(long delta) { adder.add(delta); }
+    public long snapshot()      { return adder.sum(); }
+}`
+      },
+
+      // ==================== M6 (#2501-#3000): Modern Concurrency: CompletableFuture, Executors & Virtual Threads ====================
+      {
+        mod: 6, diff: "Medium", runtime: "Non-Blocking Pipeline", scope: "CompletableFuture",
+        title: "Composing Async Pipelines: thenApply vs thenCompose and Custom Executors",
+        answer: "thenApply transforms a result synchronously (like Stream.map), whereas thenCompose flattens a dependent asynchronous stage returning another CompletionStage (like Stream.flatMap). Always supply an explicit Executor to *Async methods so blocking I/O never starves ForkJoinPool.commonPool().",
+        takeaway: "Chain orTimeout() and exceptionally() on every remote CompletableFuture pipeline.",
+        code: `import java.util.concurrent.*;
+
+public final class AsyncPipeline {
+    public static CompletableFuture<String> fetchProfile(String userId, Executor ioPool) {
+        return CompletableFuture
+            .supplyAsync(() -> "User:" + userId, ioPool)
+            .thenCompose(u -> CompletableFuture.supplyAsync(() -> u + "[ACTIVE]", ioPool))
+            .orTimeout(2, TimeUnit.SECONDS)
+            .exceptionally(ex -> "FallbackUser");
+    }
+}`
+      },
+      {
+        mod: 6, diff: "Hard", runtime: "Carrier Unmounting", scope: "Virtual Threads (JEP 444)",
+        title: "Project Loom Virtual Threads, Carrier Mounting, and Avoiding synchronized Pinning",
+        answer: "Virtual threads are lightweight JVM-managed threads mounted onto OS carrier threads. When a virtual thread hits blocking NIO or LockSupport.park, it unmounts its stack frames to the heap so the carrier executes another virtual thread—unless pinned inside a synchronized monitor.",
+        takeaway: "Replace synchronized blocks wrapping blocking I/O with ReentrantLock for Project Loom readiness.",
+        code: `import java.util.concurrent.locks.ReentrantLock;
+
+public final class LoomFriendlyGuard {
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public String callBlockingWithLock() {
+        lock.lock();
+        try {
+            return "OK";
+        } finally {
+            lock.unlock();
+        }
+    }
+}`
+      },
+      {
+        mod: 6, diff: "Medium", runtime: "Bounded Backpressure", scope: "ThreadPoolExecutor",
+        title: "ThreadPoolExecutor Queue Ordering, Rejection Policies, and Graceful Shutdown",
+        answer: "ThreadPoolExecutor creates corePoolSize threads first, then enqueues tasks into workQueue, and spawns up to maximumPoolSize threads ONLY when the queue is full. Unbounded queues cap threads at corePoolSize. Always shut down pools with shutdown() + awaitTermination().",
+        takeaway: "Pair a bounded ArrayBlockingQueue with CallerRunsPolicy for natural backpressure.",
+        code: `import java.util.concurrent.*;
+
+public final class BoundedPoolFactory {
+    public static ThreadPoolExecutor create(int cores, int max, int queueCap) {
+        return new ThreadPoolExecutor(
+            cores, max, 60L, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(queueCap),
+            new ThreadPoolExecutor.CallerRunsPolicy()
+        );
+    }
+}`
+      },
+      {
+        mod: 6, diff: "Easy", runtime: "Permit Throttling", scope: "Semaphore & Barriers",
+        title: "Rate-Limiting Concurrency with Semaphore vs CyclicBarrier / CountDownLatch",
+        answer: "CountDownLatch is a single-use gate awaiting N countdowns; CyclicBarrier resets automatically after N parties arrive; Semaphore restricts concurrent access to K permits for bounding outbound API concurrency.",
+        takeaway: "Use Semaphore(maxConcurrent) as a bulkhead around downstream database or HTTP calls.",
+        code: `import java.util.concurrent.Semaphore;
+import java.util.function.Supplier;
+
+public final class ConcurrencyBulkhead {
+    private final Semaphore permits;
+
+    public ConcurrencyBulkhead(int maxConcurrent) {
+        this.permits = new Semaphore(maxConcurrent);
+    }
+
+    public <T> T execute(Supplier<T> call) throws InterruptedException {
+        permits.acquire();
+        try { return call.get(); }
+        finally { permits.release(); }
+    }
+}`
+      },
+      {
+        mod: 6, diff: "Hard", runtime: "Work-Stealing Deque", scope: "ForkJoinPool",
+        title: "Work-Stealing Deques in ForkJoinPool and Optimal fork()/compute()/join() Ordering",
+        answer: "ForkJoinPool gives each worker thread a double-ended deque: the owner pushes/pops tasks LIFO at the head for cache locality, while idle workers steal oldest tasks FIFO from the tail. Calling left.fork(); right.compute(); left.join(); avoids idling the current worker.",
+        takeaway: "Always invoke compute() on one branch before calling join() on the forked branch.",
+        code: `import java.util.concurrent.RecursiveTask;
+
+public final class ParallelRangeSum extends RecursiveTask<Long> {
+    private final int[] arr;
+    private final int lo, hi;
+
+    public ParallelRangeSum(int[] arr, int lo, int hi) {
+        this.arr = arr; this.lo = lo; this.hi = hi;
+    }
+
+    @Override
+    protected Long compute() {
+        if (hi - lo <= 1024) {
+            long s = 0;
+            for (int i = lo; i < hi; i++) s += arr[i];
+            return s;
+        }
+        int mid = (lo + hi) >>> 1;
+        var left = new ParallelRangeSum(arr, lo, mid);
+        var right = new ParallelRangeSum(arr, mid, hi);
+        left.fork();
+        long rVal = right.compute();
+        return left.join() + rVal;
+    }
+}`
+      },
+
+      // ==================== M7 (#3001-#3500): Streams API, Lambdas & Functional Programming ====================
+      {
+        mod: 7, diff: "Medium", runtime: "Single-Pass Reduction", scope: "Collectors.teeing",
+        title: "Anatomy of Collector.of() and Single-Pass Dual Aggregation with Collectors.teeing()",
+        answer: "A Java Collector encapsulates four functions: supplier, accumulator, combiner, and finisher. Java 12+ Collectors.teeing() feeds every stream element into two downstream collectors simultaneously and merges both results in one pass.",
+        takeaway: "Use Collectors.teeing() to compute min/max, sum/count, or partitioned ratios without scanning a stream twice.",
+        code: `import java.util.List;
+import java.util.stream.Collectors;
+
+public final class TeeingExample {
+    public record MinMax(int min, int max) {}
+
+    public static MinMax findBounds(List<Integer> nums) {
+        return nums.stream().collect(Collectors.teeing(
+            Collectors.minBy(Integer::compareTo),
+            Collectors.maxBy(Integer::compareTo),
+            (minOpt, maxOpt) -> new MinMax(minOpt.orElse(0), maxOpt.orElse(0))
+        ));
+    }
+}`
+      },
+      {
+        mod: 7, diff: "Easy", runtime: "Zero-Stream-Overhead", scope: "mapMulti (Java 16)",
+        title: "Using Stream.mapMulti() vs flatMap() for Zero-Allocation 1-to-Many Expansion",
+        answer: "flatMap() creates a new intermediate Stream instance per input element, adding allocation overhead when emitting 0 or 1 items. Java 16's mapMulti((element, consumer) -> ...) pushes emitted items directly into the downstream consumer with zero intermediate Stream wrappers.",
+        takeaway: "Combine mapMulti() with pattern matching instanceof for zero-allocation filtering and downcasting.",
+        code: `import java.util.List;
+
+public final class MapMultiFilter {
+    public static List<String> extractStrings(List<Object> mixed) {
+        return mixed.stream()
+            .<String>mapMulti((obj, downstream) -> {
+                if (obj instanceof String s && !s.isBlank()) {
+                    downstream.accept(s.trim());
+                }
+            })
+            .toList();
+    }
+}`
+      },
+      {
+        mod: 7, diff: "Hard", runtime: "Spliterator Partitioning", scope: "Parallel Streams",
+        title: "Parallel Stream Pitfalls: Shared commonPool Blocking, Splitting Cost, and Stateful Lambdas",
+        answer: "parallelStream() splits data via Spliterator and runs on the JVM-wide ForkJoinPool.commonPool(). Running blocking network/DB I/O inside parallelStream() stalls unrelated parallel streams across the entire JVM, and LinkedList splits poorly in O(n).",
+        takeaway: "Restrict parallelStream() to pure, CPU-bound, stateless transformations over arrays or ArrayLists.",
+        code: `import java.util.stream.IntStream;
+
+public final class CpuBoundParallel {
+    public static long countPrimesUpTo(int limit) {
+        return IntStream.rangeClosed(2, limit)
+            .parallel()
+            .filter(CpuBoundParallel::isPrime)
+            .count();
+    }
+
+    private static boolean isPrime(int n) {
+        for (int d = 2; d * d <= n; d++) if (n % d == 0) return false;
+        return true;
+    }
+}`
+      },
+      {
+        mod: 7, diff: "Medium", runtime: "O(n) Hash Grouping", scope: "Collectors.groupingBy",
+        title: "Multi-Level Grouping, Downstream Mapping, and toMap Duplicate Key Handling",
+        answer: "Collectors.toMap(keyMapper, valMapper) throws IllegalStateException on duplicate keys unless a 3rd mergeFunction argument is supplied. Combining groupingBy with downstream collectors aggregates nested groups in a single pass.",
+        takeaway: "Always pass a merge function to Collectors.toMap() whenever key uniqueness is not guaranteed.",
+        code: `import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public final class GroupingPatterns {
+    public record Event(String service, int latencyMs) {}
+
+    public static Map<String, Double> avgLatencyByService(List<Event> events) {
+        return events.stream().collect(Collectors.groupingBy(
+            Event::service,
+            Collectors.averagingInt(Event::latencyMs)
+        ));
+    }
+}`
+      },
+      {
+        mod: 7, diff: "Easy", runtime: "Lazy Supplier Evaluation", scope: "Optional Best Practices",
+        title: "Idiomatic Optional Chaining vs Anti-Patterns (orElse vs orElseGet)",
+        answer: "Optional was designed strictly as a return type for methods that may legitimately produce no value. Avoid Optional in entity fields or method parameters, and prefer orElseGet(() -> expensiveCall()) over eager orElse(expensiveCall()).",
+        takeaway: "orElse(fn()) ALWAYS evaluates fn() even when Optional is non-empty; use orElseGet(Supplier).",
+        code: `import java.util.Optional;
+
+public final class OptionalIdioms {
+    public static String resolveRegion(Optional<String> configured) {
+        return configured
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .orElseGet(() -> System.getProperty("default.region", "ap-south-1"));
+    }
+}`
+      },
+
+      // ==================== M8 (#3501-#4000): Strings, I/O, NIO.2 & Serialization Security ====================
+      {
+        mod: 8, diff: "Medium", runtime: "50% Heap Reduction", scope: "Compact Strings (JEP 254)",
+        title: "Java 9+ Compact Strings (byte[] + Coder Flag) and String Pool Interning",
+        answer: "Since Java 9, java.lang.String stores characters in a byte[] alongside a single-byte coder flag (LATIN1 = 0, UTF16 = 1) instead of a 2-byte char[]. Pure Latin-1 strings consume 50% less heap memory and reduce GC pressure.",
+        takeaway: "Avoid calling String.intern() on unbounded user input strings, which bloats the heap-resident StringTable.",
+        code: `public final class StringMemoryNote {
+    public static boolean isLatin1Compatible(String s) {
+        return s.chars().allMatch(ch -> ch <= 0xFF);
+    }
+}`
+      },
+      {
+        mod: 8, diff: "Hard", runtime: "Kernel DMA Sendfile", scope: "NIO.2 Zero-Copy",
+        title: "FileChannel.transferTo() Zero-Copy DMA, DirectByteBuffer, and Memory Mapping",
+        answer: "Standard InputStream/OutputStream loops copy bytes 4 times across kernel/user space transitions. FileChannel.transferTo() leverages OS sendfile() DMA to stream bytes directly from page cache to socket buffer without copying into the JVM heap.",
+        takeaway: "Use FileChannel.transferTo() for high-throughput static file serving and large snapshot streaming.",
+        code: `import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+public final class ZeroCopyTransfer {
+    public static long streamFile(Path source, WritableByteChannel target) throws IOException {
+        try (var channel = FileChannel.open(source, StandardOpenOption.READ)) {
+            return channel.transferTo(0, channel.size(), target);
+        }
+    }
+}`
+      },
+      {
+        mod: 8, diff: "Hard", runtime: "Pre-Instantiation Filter", scope: "ObjectInputFilter (JEP 290/415)",
+        title: "ObjectInputFilter (JEP 290/415) and Why Java Native Serialization Is Dangerous",
+        answer: "Java ObjectInputStream instantiates arbitrary classes on the classpath and invokes readObject() gadget chains before type-checking the result, leading to Remote Code Execution. Always prefer JSON/Protobuf, or enforce strict allowlist ObjectInputFilter policies.",
+        takeaway: "Never deserialize untrusted byte streams without a strict class-allowlist ObjectInputFilter.",
+        code: `import java.io.ObjectInputFilter;
+import java.io.ObjectInputStream;
+
+public final class SafeDeserialization {
+    public static void configureFilter(ObjectInputStream ois) {
+        var filter = ObjectInputFilter.Config.createFilter("com.myapp.dto.*;java.base/*;!*");
+        ois.setObjectInputFilter(filter);
+    }
+}`
+      },
+      {
+        mod: 8, diff: "Easy", runtime: "Compile-Time Indentation", scope: "Text Blocks (JEP 378)",
+        title: "Text Block Incidental Whitespace Stripping, Line Continuations, and .formatted()",
+        answer: "Java 15+ Text Blocks strip common leading indentation determined by the leftmost non-whitespace character (including the closing triple-quote delimiter). Trailing spaces on lines are stripped unless preserved via \\s.",
+        takeaway: "Use .formatted(args...) on text blocks for clean SQL queries and JSON payloads without + concatenation noise.",
+        code: `public final class QueryTemplates {
+    public static String activeOrdersSql(String status) {
+        return """
+            SELECT id, customer_id, total_cents
+            FROM orders
+            WHERE status = '%s'
+            ORDER BY created_at DESC
+            """.formatted(status);
+    }
+}`
+      },
+      {
+        mod: 8, diff: "Medium", runtime: "Lazy File Stream", scope: "NIO.2 Path & Files",
+        title: "Streaming Large Files Lazily with Files.lines() and Try-With-Resources",
+        answer: "Files.readAllLines() loads an entire file into a List<String> on the heap, risking OutOfMemoryError on multi-gigabyte logs. Files.lines(path) returns a lazy Stream<String> backed by a BufferedReader that must be closed via try-with-resources.",
+        takeaway: "Always wrap Files.lines() and Files.walk() in try-with-resources because Stream implements AutoCloseable.",
+        code: `import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public final class LogErrorCounter {
+    public static long countErrors(Path logFile) throws IOException {
+        try (var lines = Files.lines(logFile)) {
+            return lines.filter(line -> line.contains("ERROR")).count();
+        }
+    }
+}`
+      },
+
+      // ==================== M9 (#4001-#4500): Exception Handling, Generics, Reflection & VarHandle ====================
+      {
+        mod: 9, diff: "Medium", runtime: "Compile-Time Variance", scope: "Generics PECS",
+        title: "Generics Invariance, Type Erasure, and Producer-Extends Consumer-Super (PECS)",
+        answer: "Java generics are invariant (List<Integer> is NOT a subtype of List<Number>) and erased to raw/bound types at compile time. Use ? extends T when reading/producing T values (covariance) and ? super T when writing/consuming T values (contravariance).",
+        takeaway: "Remember PECS: Producer Extends, Consumer Super—matching Collections.copy(List<? super T>, List<? extends T>).",
+        code: `import java.util.List;
+
+public final class PecsCopier {
+    public static <T> void appendAll(List<? extends T> producer, List<? super T> consumer) {
+        for (T item : producer) {
+            consumer.add(item);
+        }
+    }
+}`
+      },
+      {
+        mod: 9, diff: "Easy", runtime: "Reverse Close Order", scope: "Try-With-Resources",
+        title: "Suppressed Exceptions in Try-With-Resources vs Classic Try-Finally Masking",
+        answer: "In classic try-finally blocks, an exception thrown inside finally{} silently overwrites the primary exception from try{}. Try-with-resources preserves the primary exception and attaches close() failures via Throwable.addSuppressed(), retrievable with getSuppressed().",
+        takeaway: "Resources declared in try-with-resources close in reverse order of declaration.",
+        code: `public final class ResourceCloser {
+    public static void runSafely(AutoCloseable r1, AutoCloseable r2) throws Exception {
+        try (r1; r2) {
+            // r2.close() executes first, then r1.close()
+        }
+    }
+}`
+      },
+      {
+        mod: 9, diff: "Hard", runtime: "Acquire / Release Fence", scope: "VarHandle (JEP 193)",
+        title: "Replacing sun.misc.Unsafe with VarHandle Memory Ordering Modes",
+        answer: "Java 9 introduced java.lang.invoke.VarHandle as a type-safe, bounds-checked replacement for sun.misc.Unsafe atomic and memory-fence operations, exposing Plain, Opaque, Release/Acquire, and Volatile modes.",
+        takeaway: "Use VarHandle.getAcquire / setRelease for lightweight SPSC flags without full StoreLoad barriers.",
+        code: `import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+
+public final class ReleaseAcquireFlag {
+    private boolean ready = false;
+    private static final VarHandle READY_VH;
+
+    static {
+        try {
+            READY_VH = MethodHandles.lookup().findVarHandle(ReleaseAcquireFlag.class, "ready", boolean.class);
+        } catch (ReflectiveOperationException e) { throw new ExceptionInInitializerError(e); }
+    }
+
+    public void publish() { READY_VH.setRelease(this, true); }
+    public boolean poll() { return (boolean) READY_VH.getAcquire(this); }
+}`
+      },
+      {
+        mod: 9, diff: "Medium", runtime: "Varargs Array Safety", scope: "Heap Pollution",
+        title: "Generic Varargs Heap Pollution and @SafeVarargs Guarantees",
+        answer: "Combining generics with varargs creates an Object[] at runtime holding erased generic elements, risking ClassCastException elsewhere (heap pollution). Annotate final, static, or private methods with @SafeVarargs only when the method never writes into or leaks the array.",
+        takeaway: "Never return or expose the backing T... array reference from a @SafeVarargs method.",
+        code: `import java.util.List;
+
+public final class SafeVarargsHelper {
+    @SafeVarargs
+    public static <T> List<T> immutableOf(T... elements) {
+        return List.of(elements);
+    }
+}`
+      },
+      {
+        mod: 9, diff: "Easy", runtime: "Zero Stack-Walk Cost", scope: "Exception Performance",
+        title: "Cost of Exception Stack Trace Capture and Control-Flow Anti-Patterns",
+        answer: "Constructing a Throwable invokes native fillInStackTrace(), walking the entire call stack—making exception creation orders of magnitude slower than returning an Optional or sealed Result.",
+        takeaway: "Use sealed result types or Optional for expected domain outcomes; reserve exceptions for truly exceptional failures.",
+        code: `public sealed interface Lookup<T> permits Lookup.Found, Lookup.Missing {
+    record Found<T>(T value) implements Lookup<T> {}
+    record Missing<T>(String key) implements Lookup<T> {}
+}`
+      },
+
+      // ==================== M10 (#4501-#5000): Enterprise Java, JFR Profiling & Production Patterns ====================
+      {
+        mod: 10, diff: "Hard", runtime: "<1% Overhead Telemetry", scope: "JFR Profiling",
+        title: "Continuous Production Profiling with JDK Flight Recorder (JFR)",
+        answer: "JDK Flight Recorder is built directly into OpenJDK 17+ with <1% runtime overhead, capturing allocation flame graphs, lock contention, socket I/O, safepoint pauses, and GC events into binary .jfr recordings without external agents.",
+        takeaway: "Run jcmd <pid> JFR.start duration=60s filename=prod.jfr on live containers to diagnose CPU, allocation, and lock hotspots.",
+        code: `import jdk.jfr.Recording;
+import java.nio.file.Path;
+import java.time.Duration;
+
+public final class ProgrammaticJfr {
+    public static void captureSnippet(Path output) throws Exception {
+        try (var rec = new Recording()) {
+            rec.setDuration(Duration.ofSeconds(10));
+            rec.start();
+            rec.stop();
+            rec.dump(output);
+        }
+    }
+}`
+      },
+      {
+        mod: 10, diff: "Medium", runtime: "Invariant Protection", scope: "Defensive Copying",
+        title: "Preventing Representation Exposure in Domain Aggregates",
+        answer: "Returning a mutable Date, array, or ArrayList directly from a getter lets callers bypass domain invariants. Always copy mutable inputs on entry and return immutable views or copies on exit.",
+        takeaway: "Use immutable java.time.Instant instead of mutable java.util.Date across all domain models and DTOs.",
+        code: `import java.time.Instant;
+import java.util.List;
+
+public final class AuditBatch {
+    private final Instant createdAt;
+    private final List<String> entries;
+
+    public AuditBatch(Instant createdAt, List<String> entries) {
+        this.createdAt = java.util.Objects.requireNonNull(createdAt);
+        this.entries = List.copyOf(entries);
+    }
+
+    public Instant createdAt()     { return createdAt; }
+    public List<String> entries()  { return entries; }
+}`
+      },
+      {
+        mod: 10, diff: "Medium", runtime: "Lazy SPI Discovery", scope: "ServiceLoader (JPMS)",
+        title: "Decoupled Plugin Architecture with java.util.ServiceLoader",
+        answer: "ServiceLoader discovers and lazily instantiates implementations of a service interface declared via META-INF/services or module-info.java 'provides ... with ...', enabling zero-coupling plugin architectures without reflection frameworks.",
+        takeaway: "Prefer ServiceLoader over manual Class.forName() scanning for extensible SPI plugin points.",
+        code: `import java.util.List;
+import java.util.ServiceLoader;
+
+public final class PluginDiscovery {
+    public interface Exporter { String format(); }
+
+    public static List<Exporter> loadAll() {
+        return ServiceLoader.load(Exporter.class).stream()
+            .map(ServiceLoader.Provider::get)
+            .toList();
+    }
+}`
+      },
+      {
+        mod: 10, diff: "Easy", runtime: "HTTP/2 Multiplexing", scope: "HttpClient (Java 11+)",
+        title: "Reusable HTTP/2 Non-Blocking java.net.http.HttpClient & Timeout Hygiene",
+        answer: "Java 11+'s built-in HttpClient supports HTTP/2 multiplexing, TLS, and asynchronous sendAsync() returning CompletableFuture. Instantiate a single shared HttpClient instance to reuse connection pools, and always configure connectTimeout and per-request timeout.",
+        takeaway: "Creating a new HttpClient per HTTP request leaks selector threads and prevents TLS session reuse.",
+        code: `import java.net.URI;
+import java.net.http.*;
+import java.time.Duration;
+
+public final class ResilientHttp {
+    private static final HttpClient CLIENT = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(3))
+        .build();
+
+    public static HttpRequest buildGet(String url) {
+        return HttpRequest.newBuilder(URI.create(url))
+            .timeout(Duration.ofSeconds(5))
+            .GET()
+            .build();
+    }
+}`
+      },
+      {
+        mod: 10, diff: "Hard", runtime: "Deterministic Clock", scope: "Clock DI & Testability",
+        title: "Deterministic Time Testing with java.time.Clock Dependency Injection",
+        answer: "Calling Instant.now() or LocalDate.now() directly couples business logic to the system wall clock, making expiry, TTL, and billing boundary tests flaky. Injecting java.time.Clock lets production use Clock.systemUTC() while tests pass Clock.fixed().",
+        takeaway: "Inject java.time.Clock into every service checking token expiry, rate windows, or SLA deadlines.",
+        code: `import java.time.Clock;
+import java.time.Instant;
+
+public final class TokenValidator {
+    private final Clock clock;
+
+    public TokenValidator(Clock clock) {
+        this.clock = clock;
+    }
+
+    public boolean isExpired(Instant expiresAt) {
+        return !Instant.now(clock).isBefore(expiresAt);
+    }
+}`
+      }
+    ];
+
+    // 10 Architectural Interview Evaluation Lenses
+    const LENSES = [
+      { label: "Core Specification", prefix: "Core Specification & Runtime Semantics", lead: "Explain the language/JVM specification rules and exact runtime behavior of" },
+      { label: "Production Pitfall", prefix: "Production Edge Case & Subtle Pitfall", lead: "What subtle production bug or hidden edge case occurs when misusing" },
+      { label: "Memory & GC Impact", prefix: "Heap Allocation & GC Pressure Analysis", lead: "Analyze the object allocation rate, CPU cache locality, and GC pressure implications of" },
+      { label: "Java 17+ Modernization", prefix: "Modern Java 17 LTS Refactoring Pattern", lead: "How do modern Java 17+ LTS idioms simplify, harden, and replace legacy boilerplate in" },
+      { label: "Concurrency Safety", prefix: "Thread-Safety & Multi-Core Contention", lead: "Under high multi-threaded contention, what synchronization or visibility guarantees apply to" },
+      { label: "Performance Tuning", prefix: "Throughput & Tail-Latency Optimization", lead: "How would you tune and optimize throughput and p99 latency when using" },
+      { label: "Code Review Focus", prefix: "Senior Code Review & API Contract Check", lead: "During a senior pull-request review, what invariants and API contracts do you verify around" },
+      { label: "JVM Diagnostics", prefix: "Troubleshooting, Profiling & Observability", lead: "Which JVM flags, JFR events, or diagnostic signals help troubleshoot issues in" },
+      { label: "Trade-Off Analysis", prefix: "Design Trade-Offs & Alternative JDK APIs", lead: "Compare alternative JDK APIs and architectural trade-offs when choosing" },
+      { label: "Scale & Resilience", prefix: "High-Throughput Production Resilience", lead: "In a high-throughput distributed backend service, how do you safely apply" }
+    ];
+
+    // 10 Concrete Enterprise Production Scenarios
+    // 5 Topics/Module x 10 Lenses x 10 Scenarios = 500 Distinct Questions/Module = 5,000 Total
+    const SCENARIOS = [
+      { tag: "High-Throughput REST Gateway", context: "in a low-latency REST API gateway handling 50k RPS" },
+      { tag: "Event-Driven Kafka Consumer", context: "inside a partitioned Kafka stream consumer pipeline" },
+      { tag: "Financial Ledger & Settlement", context: "within an ACID-compliant payment settlement engine" },
+      { tag: "Multi-Tenant SaaS Isolation", context: "across a multi-tenant cloud service with strict tenant boundaries" },
+      { tag: "Containerized Kubernetes Pod", context: "inside a cgroup memory- and CPU-constrained Kubernetes pod" },
+      { tag: "Distributed Cache & Session Store", context: "for an in-memory distributed cache and session store" },
+      { tag: "Batch ETL & Analytics Pipeline", context: "during a multi-gigabyte nightly batch ETL aggregation" },
+      { tag: "Zero-Downtime Rolling Upgrade", context: "during a zero-downtime rolling deployment from Java 11 to 17" },
+      { tag: "Real-Time Telemetry & Observability", context: "in a continuous metrics and distributed tracing collector" },
+      { tag: "Plugin SDK & Modular Library", context: "when publishing a backward-compatible JPMS library SDK" }
+    ];
+
+    // Build Lightweight 5,000-Question Catalog (<15ms boot, lazy body hydration on expand)
+    const TOTAL_QUESTIONS = 5000;
+    const QUESTIONS = new Array(TOTAL_QUESTIONS);
+    let qIdx = 0;
+
+    for (let m = 1; m <= 10; m++) {
+      const modObj = MODULES[m - 1];
+      const modTopics = CORE_TOPICS.filter(t => t.mod === m);
+      for (let s = 0; s < SCENARIOS.length; s++) {
+        const scenario = SCENARIOS[s];
+        for (let l = 0; l < LENSES.length; l++) {
+          const lens = LENSES[l];
+          for (let t = 0; t < modTopics.length; t++) {
+            const topic = modTopics[t];
+            const id = qIdx + 1;
+            QUESTIONS[qIdx++] = {
+              id,
+              modId: modObj.id,
+              module: modObj.name,
+              feature: modObj.feature,
+              difficulty: topic.diff,
+              runtime: topic.runtime,
+              scope: `${lens.label} • ${scenario.tag}`,
+              title: `[${scenario.tag}] ${lens.prefix}: ${topic.title}`,
+              topicRef: topic,
+              lensRef: lens,
+              scenarioRef: scenario
+            };
+          }
+        }
+      }
+    }
+
+    // Persistent LocalStorage State
+    const STORAGE_DONE = "java17_interview_5000_done";
+    const STORAGE_BOOK = "java17_interview_5000_book";
+    let mastered = new Set(JSON.parse(localStorage.getItem(STORAGE_DONE) || "[]"));
+    let bookmarked = new Set(JSON.parse(localStorage.getItem(STORAGE_BOOK) || "[]"));
+
+    let filtered = QUESTIONS;
+    let currentPage = 1;
+    let pageSize = 25;
+    let highlightedId = null;
+
+    // Populate Filter Dropdowns
+    const modSelect = document.getElementById("moduleFilter");
+    const featSelect = document.getElementById("featureFilter");
+    MODULES.forEach(m => {
+      const o1 = document.createElement("option");
+      o1.value = String(m.id);
+      o1.textContent = `M${m.id}: ${m.name} (500)`;
+      modSelect.appendChild(o1);
+
+      const o2 = document.createElement("option");
+      o2.value = m.feature;
+      o2.textContent = m.feature;
+      featSelect.appendChild(o2);
+    });
+
+    function showToast(msg) {
+      const el = document.getElementById("toastMsg");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove("show"), 2000);
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_DONE, JSON.stringify([...mastered]));
+      localStorage.setItem(STORAGE_BOOK, JSON.stringify([...bookmarked]));
+      updateDashboard();
+    }
+
+    function updateDashboard() {
+      const count = mastered.size;
+      const pct = ((count / TOTAL_QUESTIONS) * 100).toFixed(2);
+      document.getElementById("statsLabel").innerHTML =
+        `${count.toLocaleString()} / 5,000 Mastered (${pct}%) &bull; Bookmarked: ${bookmarked.size.toLocaleString()}`;
+      document.getElementById("progressFill").style.width = `${pct}%`;
+    }
+
+    function applyFilters(resetPage = true) {
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const modVal = modSelect.value;
+      const diffVal = document.getElementById("difficultyFilter").value;
+      const featVal = featSelect.value;
+      const statVal = document.getElementById("statusFilter").value;
+
+      filtered = QUESTIONS.filter(item => {
+        if (modVal !== "ALL" && String(item.modId) !== modVal) return false;
+        if (diffVal !== "ALL" && item.difficulty !== diffVal) return false;
+        if (featVal !== "ALL" && item.feature !== featVal) return false;
+        if (statVal === "DONE" && !mastered.has(item.id)) return false;
+        if (statVal === "TODO" && mastered.has(item.id)) return false;
+        if (statVal === "BOOKMARK" && !bookmarked.has(item.id)) return false;
+        if (q) {
+          const idTag = `#${item.id}`;
+          return (
+            idTag.includes(q) ||
+            String(item.id) === q ||
+            item.title.toLowerCase().includes(q) ||
+            item.module.toLowerCase().includes(q) ||
+            item.feature.toLowerCase().includes(q) ||
+            item.scope.toLowerCase().includes(q) ||
+            item.topicRef.answer.toLowerCase().includes(q)
+          );
+        }
+        return true;
+      });
+
+      if (resetPage) currentPage = 1;
+      renderPage();
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderPage() {
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIdx = (currentPage - 1) * pageSize;
+      const endIdx = Math.min(startIdx + pageSize, total);
+      const slice = filtered.slice(startIdx, endIdx);
+
+      document.getElementById("resultSummary").textContent =
+        total === 0
+          ? "No questions match current filters"
+          : `Showing ${(startIdx + 1).toLocaleString()}–${endIdx.toLocaleString()} of ${total.toLocaleString()} questions`;
+
+      document.getElementById("pageIndicator").textContent = `Page ${currentPage} / ${totalPages}`;
+      document.getElementById("firstPageBtn").disabled = currentPage <= 1;
+      document.getElementById("prevPageBtn").disabled = currentPage <= 1;
+      document.getElementById("nextPageBtn").disabled = currentPage >= totalPages;
+      document.getElementById("lastPageBtn").disabled = currentPage >= totalPages;
+
+      const listEl = document.getElementById("questionList");
+      listEl.innerHTML = "";
+
+      slice.forEach(item => {
+        const isDone = mastered.has(item.id);
+        const diffCls = item.difficulty === "Easy" ? "b-easy" : item.difficulty === "Medium" ? "b-med" : "b-hard";
+
+        const card = document.createElement("article");
+        card.className = "q-card" + (highlightedId === item.id ? " highlight" : "");
+        card.id = `card-${item.id}`;
+
+        card.innerHTML = `
+          <div class="q-head" data-id="${item.id}">
+            <div class="q-left">
+              <span class="q-num">#${item.id}</span>
+              <span class="q-title">${item.title}</span>
+            </div>
+            <div class="badges">
+              <span class="badge b-feat">${item.feature}</span>
+              <span class="badge b-mod">M${item.modId}</span>
+              <span class="badge ${diffCls}">${item.difficulty}</span>
+              <span style="font-weight:700;color:var(--green);min-width:16px;">${isDone ? "&#10003;" : ""}</span>
+            </div>
+          </div>
+          <div class="q-body" id="body-${item.id}"></div>
+        `;
+        listEl.appendChild(card);
+
+        if (highlightedId === item.id) {
+          expandCard(item.id, true);
+        }
+      });
+    }
+
+    function expandCard(id, forceOpen = false) {
+      const body = document.getElementById(`body-${id}`);
+      if (!body) return;
+      const willOpen = forceOpen || !body.classList.contains("open");
+      if (!willOpen) {
+        body.classList.remove("open");
+        return;
+      }
+
+      if (!body.dataset.hydrated) {
+        const item = QUESTIONS[id - 1];
+        const topic = item.topicRef;
+        const promptText = `${item.lensRef.lead} ${topic.title.toLowerCase()} ${item.scenarioRef.context}?`;
+        const isDone = mastered.has(id);
+        const isBook = bookmarked.has(id);
+
+        body.innerHTML = `
+          <div class="meta-row">
+            <span><strong>Module:</strong> ${item.module}</span>
+            <span><strong>Runtime:</strong> ${item.runtime}</span>
+            <span><strong>Evaluation Lens:</strong> ${item.scope}</span>
+            <span><strong>Java 17 Idiom:</strong> ${item.feature}</span>
+          </div>
+          <p class="prompt-box"><strong>Interview Question:</strong> ${promptText}</p>
+          <p class="problem-desc"><strong>Technical Answer:</strong> ${topic.answer}</p>
+          <div class="takeaway-pill"><strong>Interviewer Takeaway:</strong> ${topic.takeaway}</div>
+          <div class="code-wrap">
+            <button class="copy-btn" data-copy="${id}">Copy Java 17 Code</button>
+            <pre><code id="code-${id}">${escapeHtml(topic.code)}</code></pre>
+          </div>
+          <div class="card-footer">
+            <label class="check-wrap">
+              <input type="checkbox" data-done="${id}" ${isDone ? "checked" : ""} />
+              <span>Mark #${id} as Mastered</span>
+            </label>
+            <button data-book="${id}">${isBook ? "★ Bookmarked" : "☆ Bookmark"}</button>
+          </div>
+        `;
+        body.dataset.hydrated = "1";
+      }
+      body.classList.add("open");
+    }
+
+    // Event Delegation for Question Cards
+    document.getElementById("questionList").addEventListener("click", e => {
+      const head = e.target.closest(".q-head");
+      if (head) { expandCard(Number(head.dataset.id)); return; }
+
+      const copyBtn = e.target.closest("[data-copy]");
+      if (copyBtn) {
+        const id = copyBtn.dataset.copy;
+        const codeEl = document.getElementById(`code-${id}`);
+        const ta = document.createElement("textarea");
+        ta.value = codeEl.innerText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        copyBtn.textContent = "Copied!";
+        showToast(`Copied Java 17 snippet for #${id}`);
+        setTimeout(() => (copyBtn.textContent = "Copy Java 17 Code"), 1500);
+        return;
+      }
+
+      const bookBtn = e.target.closest("[data-book]");
+      if (bookBtn) {
+        const id = Number(bookBtn.dataset.book);
+        if (bookmarked.has(id)) {
+          bookmarked.delete(id);
+          bookBtn.textContent = "☆ Bookmark";
+        } else {
+          bookmarked.add(id);
+          bookBtn.textContent = "★ Bookmarked";
+        }
+        saveState();
+      }
+    });
+
+    document.getElementById("questionList").addEventListener("change", e => {
+      const chk = e.target.closest("[data-done]");
+      if (chk) {
+        const id = Number(chk.dataset.done);
+        if (chk.checked) mastered.add(id);
+        else mastered.delete(id);
+        saveState();
+        renderPage();
+      }
+    });
+
+    // Debounced Search & Filter Listeners
+    let debounceTimer;
+    document.getElementById("searchInput").addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => applyFilters(true), 120);
+    });
+    ["moduleFilter", "difficultyFilter", "featureFilter", "statusFilter"].forEach(id => {
+      document.getElementById(id).addEventListener("change", () => applyFilters(true));
+    });
+
+    // Direct Jump #1..5000
+    document.getElementById("jumpInput").addEventListener("change", e => {
+      const targetId = Math.max(1, Math.min(TOTAL_QUESTIONS, Number(e.target.value) || 1));
+      document.getElementById("searchInput").value = "";
+      modSelect.value = "ALL";
+      document.getElementById("difficultyFilter").value = "ALL";
+      featSelect.value = "ALL";
+      document.getElementById("statusFilter").value = "ALL";
+      filtered = QUESTIONS;
+      highlightedId = targetId;
+      currentPage = Math.ceil(targetId / pageSize);
+      renderPage();
+      const el = document.getElementById(`card-${targetId}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    // Pagination Controls
+    document.getElementById("pageSizeSelect").addEventListener("change", e => {
+      pageSize = Number(e.target.value);
+      currentPage = 1;
+      renderPage();
+    });
+    document.getElementById("firstPageBtn").onclick = () => { currentPage = 1; renderPage(); };
+    document.getElementById("prevPageBtn").onclick = () => { if (currentPage > 1) { currentPage--; renderPage(); } };
+    document.getElementById("nextPageBtn").onclick = () => { currentPage++; renderPage(); };
+    document.getElementById("lastPageBtn").onclick = () => {
+      currentPage = Math.max(1, Math.ceil(filtered.length / pageSize));
+      renderPage();
+    };
+
+    // Random Mock Question Picker
+    document.getElementById("randomBtn").onclick = () => {
+      if (filtered.length === 0) return;
+      const pick = filtered[Math.floor(Math.random() * filtered.length)];
+      const idx = filtered.indexOf(pick);
+      highlightedId = pick.id;
+      currentPage = Math.floor(idx / pageSize) + 1;
+      renderPage();
+      const el = document.getElementById(`card-${pick.id}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    // Module Syllabus Modal (10 x 500)
+    const modal = document.getElementById("syllabusModal");
+    document.getElementById("syllabusBtn").onclick = () => {
+      const tbody = document.getElementById("syllabusBody");
+      tbody.innerHTML = "";
+      MODULES.forEach(m => {
+        const start = (m.id - 1) * 500 + 1;
+        const end = m.id * 500;
+        let doneCount = 0;
+        for (let k = start; k <= end; k++) if (mastered.has(k)) doneCount++;
+        const tr = document.createElement("tr");
+        tr.className = "mod-row";
+        tr.innerHTML = `
+          <td>M${m.id}</td>
+          <td><strong>${m.name}</strong></td>
+          <td>#${start} &ndash; #${end}</td>
+          <td>${m.feature}</td>
+          <td>${doneCount} / 500</td>
+        `;
+        tr.onclick = () => {
+          modal.classList.remove("active");
+          modSelect.value = String(m.id);
+          applyFilters(true);
+        };
+        tbody.appendChild(tr);
+      });
+      modal.classList.add("active");
+    };
+    document.getElementById("closeModalBtn").onclick = () => modal.classList.remove("active");
+    modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("active"); });
+
+    // Export / Import JSON Progress
+    document.getElementById("exportBtn").onclick = () => {
+      const payload = JSON.stringify({ mastered: [...mastered], bookmarked: [...bookmarked] }, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "java17-interview-5000-progress.json";
+      a.click();
+      showToast("Exported java17-interview-5000-progress.json");
+    };
+    document.getElementById("importBtn").onclick = () => document.getElementById("importFile").click();
+    document.getElementById("importFile").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (Array.isArray(data.mastered)) mastered = new Set(data.mastered);
+          if (Array.isArray(data.bookmarked)) bookmarked = new Set(data.bookmarked);
+          saveState();
+          renderPage();
+          showToast("Progress imported successfully!");
+        } catch {
+          showToast("Invalid progress JSON file.");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    });
+
+    // Theme & Custom Reset Modal
+    document.getElementById("themeBtn").onclick = () => {
+      const isLight = document.body.getAttribute("data-theme") === "light";
+      document.body.setAttribute("data-theme", isLight ? "dark" : "light");
+    };
+
+    const resetModal = document.getElementById("resetModal");
+    document.getElementById("resetBtn").onclick = () => resetModal.classList.add("active");
+    document.getElementById("closeResetBtn").onclick = () => resetModal.classList.remove("active");
+    document.getElementById("cancelResetBtn").onclick = () => resetModal.classList.remove("active");
+    resetModal.addEventListener("click", e => { if (e.target === resetModal) resetModal.classList.remove("active"); });
+
+    document.getElementById("confirmResetBtn").onclick = () => {
+      mastered.clear();
+      bookmarked.clear();
+      saveState();
+      renderPage();
+      resetModal.classList.remove("active");
+      showToast("Progress reset to 0 / 5,000.");
+    };
+
+    window.onload = function () {
+      updateDashboard();
+      renderPage();
+    };
+  </script>
+</body>
+</html>
